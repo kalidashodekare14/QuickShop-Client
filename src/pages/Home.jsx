@@ -10,7 +10,6 @@ const Home = () => {
         </div>
         {/* Categoresh Section */}
         <div>
-          
           <Categories></Categories>
         </div>
     </div>
