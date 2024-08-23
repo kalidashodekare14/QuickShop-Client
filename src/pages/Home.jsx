@@ -1,9 +1,18 @@
 import React from 'react';
+import Categories from '../Components/Categories/Categories';
 
 const Home = () => {
   return (
     <div>
-        <h1>This is a Home</h1>
+      {/* Bannger Section */}
+        <div>
+
+        </div>
+        {/* Categoresh Section */}
+        <div>
+          
+          <Categories></Categories>
+        </div>
     </div>
   );
 };
