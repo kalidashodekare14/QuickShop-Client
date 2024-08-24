@@ -56,25 +56,25 @@ const Navbar = () => {
         >
           <div className="flex bg-[#00bba6] flex-col md:flex-row md:mx-6 ">
             <a
-              className=" transition-colors duration-300 transform dark:hover:text-blue-400 md:my-0 hover:bg-[#018576] hover:text-white text-white p-4 text-[18px]"
+              className=" transition-colors duration-300 transform dark:hover:text-blue-400 md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               Home
             </a>
             <a
-              className="transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-4 text-[18px]"
+              className="transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               Shop
             </a>
             <a
-              className="transition-colors duration-300 transform  dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-4 text-[18px]"
+              className="transition-colors duration-300 transform  dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               Contact
             </a>
             <a
-              className="transition-colors duration-300 transform dark:text-gray-200 dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-4 text-[18px]"
+              className="transition-colors duration-300 transform dark:text-gray-200 dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               About
