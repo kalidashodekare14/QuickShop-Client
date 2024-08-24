@@ -1,12 +1,11 @@
 import Banner from "../Components/Banner/Banner";
 import Categories from "../Components/Categories/Categories";
 
+
 const Home = () => {
   return (
-    <div className="md:w-[1536px] mx-auto">
-      <div>
-        <Banner />
-      </div>
+    <div className="mx-10 my-10">
+      <Banner />
       <div>
         <Categories></Categories>
       </div>
