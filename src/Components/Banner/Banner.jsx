@@ -8,8 +8,8 @@ import img from "../../assets/offer.jpg";
 import img2 from "../../assets/women.jpg";
 const Banner = () => {
   return (
-    <div className="flex gap-5 h-[80vh]">
-      <div className="w-[70%]">
+    <div className="flex flex-col lg:flex-row gap-5 lg:h-[80vh]">
+      <div className="lg:w-[70%]">
         <Swiper
           slidesPerView={1}
           spaceBetween={30}
@@ -22,19 +22,19 @@ const Banner = () => {
           className="mySwiper"
         >
           <SwiperSlide>
-            <div className="h-[80vh]">
+            <div className="lg:h-[80vh]">
               <img src={img} alt="" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="h-[80vh]">
+            <div className="lg:h-[80vh]">
               <img src={img} alt="" />
             </div>
           </SwiperSlide>
         </Swiper>
       </div>
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-5 h-[80vh]">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-5 lg:h-[80vh]">
           <div>
             <img src={img} alt="" />
           </div>

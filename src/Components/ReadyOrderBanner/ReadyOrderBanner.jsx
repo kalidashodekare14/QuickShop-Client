@@ -35,7 +35,7 @@ const ReadyOrderBanner = () => {
     return (
         <div>
             <div>
-                <h1 className='text-center text-3xl my-20'>Ready for Order 🔥</h1>
+                <h1 className='text-center text-3xl lg:my-20 my-10'>Ready for Order 🔥</h1>
             </div>
             <Carousel responsive={responsive}>
                 {/* card 1 */}

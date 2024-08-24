@@ -5,12 +5,13 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import './Home.css'
 import ReadyOrderBanner from "../../Components/ReadyOrderBanner/ReadyOrderBanner";
+import FeaturedProduct from "../../Components/FeaturedProduct/FeaturedProduct";
 
 const Home = () => {
 
 
   return (
-    <div className="mx-10 my-10">
+    <div className="lg:mx-10 mx-3 my-10">
       <Helmet>
         <title>Quick Shop | Home</title>
       </Helmet>
@@ -20,6 +21,9 @@ const Home = () => {
       </div>
       <div className="my-10">
         <ReadyOrderBanner></ReadyOrderBanner>
+      </div>
+      <div>
+        <FeaturedProduct></FeaturedProduct>
       </div>
     </div>
   );
