@@ -1,12 +1,12 @@
-import {useState} from "react";
+import { useState } from "react";
 import logo from "/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="relative bg-[#00bba6] shadow ">
-      <div className="container  mx-auto md:flex md:justify-between md:items-center">
+    <nav className="sticky top-0 z-30 w-full bg-[#00bba6] shadow">
+      <div className="mx-10 md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
             <img
@@ -49,11 +49,10 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`${
-            isOpen
+          className={`${isOpen
               ? "translate-x-0 opacity-100 "
               : "opacity-0 -translate-x-full "
-          } absolute inset-x-0 z-20 w-full transition-all duration-300 ease-in-out  md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
+            } absolute inset-x-0 z-20 w-full transition-all duration-300 ease-in-out  md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
         >
           <div className="flex bg-[#00bba6] flex-col md:flex-row md:mx-6 ">
             <a
