@@ -47,8 +47,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 2 */}
@@ -64,8 +64,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 3 */}
@@ -81,8 +81,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 4 */}
@@ -98,8 +98,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 6 */}
@@ -115,8 +115,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 7 */}
@@ -132,8 +132,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 8 */}
@@ -149,8 +149,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
             {/* card 9 */}
@@ -166,8 +166,8 @@ const ReadyOrderBanner = () => {
                     <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                    <button className="btn">Buy Now</button>
-                    <button className="btn">Add to Cart</button>
+                    <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                    <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                 </div>
             </div>
         </Carousel>
