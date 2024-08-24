@@ -5,7 +5,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Pagination, Navigation } from 'swiper/modules';
-
 import img from '../../assets/offer.jpg'
 import img2 from '../../assets/women.jpg'
 const Banner = () => {
@@ -83,7 +82,7 @@ const Banner = () => {
             <img src={img} alt="" />
           </div>
           <div>
-            <img src={img} alt="" />
+            <img src={img2} alt="" />
           </div>
         </div>
 
