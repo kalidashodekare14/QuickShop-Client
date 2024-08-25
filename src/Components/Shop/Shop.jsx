@@ -63,7 +63,7 @@ const Shop = () => {
             <div className='w-full min-h-screen'>
                 <div className=" bg-white flex justify-between items-center w-[96%] m-auto p-2">
                     <div>
-                        {/* <h1 className="">All Laptop</h1> */}
+                        <h1 className="hidden lg:block">All Laptop</h1>
                         <div className="md:hidden">
                             <FaChartBar className="cursor-pointer" onClick={toggleSidebar} />
                         </div>
