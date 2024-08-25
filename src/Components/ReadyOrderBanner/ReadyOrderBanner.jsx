@@ -37,7 +37,11 @@ const ReadyOrderBanner = () => {
             <div>
                 <h1 className='text-center text-3xl lg:my-20 my-10'>Ready for Order 🔥</h1>
             </div>
-            <Carousel responsive={responsive}>
+            <Carousel
+                autoPlay={true}
+                autoPlaySpeed={3000}
+                infinite={true}
+                responsive={responsive}>
                 {/* card 1 */}
                 <div className="relative border flex flex-col justify-center items-center p-5 me-5">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
