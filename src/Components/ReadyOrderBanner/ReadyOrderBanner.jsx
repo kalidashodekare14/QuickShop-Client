@@ -20,7 +20,7 @@ const ReadyOrderBanner = () => {
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 6
+            items: 5
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
@@ -43,7 +43,7 @@ const ReadyOrderBanner = () => {
                 infinite={true}
                 responsive={responsive}>
                 {/* card 1 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -60,7 +60,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 2 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -77,7 +77,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 3 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -94,7 +94,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 4 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -111,7 +111,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 6 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -128,7 +128,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 7 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -145,7 +145,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 8 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
@@ -162,7 +162,7 @@ const ReadyOrderBanner = () => {
                     </div>
                 </div>
                 {/* card 9 */}
-                <div className="relative border flex flex-col justify-center items-center p-5 me-5">
+                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
                     <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                         <h1 className="text-white">25 % OFF</h1>
                     </div>
