@@ -2,12 +2,21 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import './Shop.css'
 import card from '../../assets/s1.png'
+import { useState } from "react";
+import { FaChartBar } from "react-icons/fa";
 
 const Shop = () => {
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen)
+    }
+
     return (
-        <div className='flex bg-[#f2f4f8] pt-10'>
+        <div className='flex bg-[#f2f4f8] pt-10 relative'>
             {/* Product Filtering */}
-            <div className='w-72 min-h-screen space-y-2'>
+            <div className={`fixed z-10 left-0 translate-y-16 transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
                 <select className="select select-bordered w-full">
                     <option disabled selected>Category</option>
                     <option>Han Solo</option>
@@ -53,7 +62,12 @@ const Shop = () => {
             </div>
             <div className='w-full min-h-screen'>
                 <div className=" bg-white flex justify-between items-center w-[96%] m-auto p-2">
-                    <h1>All Laptop</h1>
+                    <div>
+                        <h1 className="hidden lg:block">All Laptop</h1>
+                        <div className="md:hidden">
+                            <FaChartBar className="cursor-pointer" onClick={toggleSidebar} />
+                        </div>
+                    </div>
                     <div className="flex items-center">
                         <h3 className="w-28">Sort By:</h3>
                         <select className="select select-bordered w-full">
@@ -422,7 +436,7 @@ const Shop = () => {
                                 <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
