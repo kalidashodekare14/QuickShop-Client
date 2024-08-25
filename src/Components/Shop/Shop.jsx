@@ -16,7 +16,7 @@ const Shop = () => {
     return (
         <div className='flex bg-[#f2f4f8] pt-10 relative'>
             {/* Product Filtering */}
-            <div className={`fixed z-10 left-0 translate-y-16 transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
+            <div className={`fixed z-10 left-0  transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
                 <select className="select select-bordered w-full">
                     <option disabled selected>Category</option>
                     <option>Han Solo</option>
