@@ -1,6 +1,7 @@
 import { useState } from "react";
 import logo from "/logo.png";
 import { FaCartPlus } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,18 +57,24 @@ const Navbar = () => {
             } absolute inset-x-0 z-20 w-full transition-all duration-300 ease-in-out  md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
         >
           <div className="flex bg-[#00bba6] flex-col md:flex-row md:mx-6 ">
-            <a
-              className=" transition-colors duration-300 transform dark:hover:text-blue-400 md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
+            <NavLink
+              to="/"
+              className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 bg-[#018576] hover:text-white text-white p-5 text-[20px]" : "transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
+              }
               href="#"
             >
               Home
-            </a>
-            <a
-              className="transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
+            </NavLink>
+            <NavLink
+              to="/shop"
+              className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 bg-[#018576] hover:text-white text-white p-5 text-[20px]" : "transition-colors duration-300 transform dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
+              }
               href="#"
             >
               Shop
-            </a>
+            </NavLink>
             <a
               className="transition-colors duration-300 transform  dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
