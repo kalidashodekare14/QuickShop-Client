@@ -3,7 +3,7 @@ import "react-range-slider-input/dist/style.css";
 import './Shop.css'
 import card from '../../assets/s1.png'
 import { useState } from "react";
-import { FaChartBar } from "react-icons/fa";
+import { FaChartBar, FaSearch } from "react-icons/fa";
 
 const Shop = () => {
 
@@ -61,15 +61,19 @@ const Shop = () => {
                 </div>
             </div>
             <div className='w-full min-h-screen'>
-                <div className=" bg-white flex justify-between items-center w-[96%] m-auto p-2">
+                <div className=" space-x-2 bg-white flex justify-between items-center w-[96%] m-auto p-2">
                     <div>
                         <h1 className="hidden lg:block">All Laptop</h1>
                         <div className="md:hidden">
                             <FaChartBar className="cursor-pointer" onClick={toggleSidebar} />
                         </div>
                     </div>
+                    <div className="flex items-center border px-3 rounded-xl">
+                        <input className="input lg:w-80 w-full" placeholder="Search" type="text" />
+                        <FaSearch className=""></FaSearch>
+                    </div>
                     <div className="flex items-center">
-                        <h3 className="w-28">Sort By:</h3>
+                        <h3 className="w-28 hidden lg:block">Sort By:</h3>
                         <select className="select select-bordered w-full">
                             <option disabled selected>Default</option>
                             <option>Han Solo</option>
