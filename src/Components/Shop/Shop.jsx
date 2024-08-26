@@ -3,20 +3,29 @@ import "react-range-slider-input/dist/style.css";
 import './Shop.css'
 import card from '../../assets/s1.png'
 import { useState } from "react";
-import { FaChartBar } from "react-icons/fa";
+import { FaChartBar, FaSearch } from "react-icons/fa";
 
 const Shop = () => {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [priceRange, setPriceRange] = useState([0, 500])
+    // const [minPrice, setMinPrice] = useState("")
+    // const [maxPrice, setMaxPrice] = useState("")
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen)
     }
 
+
+    const handlePriceChange = (v) => {
+        setPriceRange(v)
+    }
+
+
     return (
         <div className='flex bg-[#f2f4f8] pt-10 relative'>
             {/* Product Filtering */}
-            <div className={`fixed z-10 left-0  transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
+            <div className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 translate-y-16 transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
                 <select className="select select-bordered w-full">
                     <option disabled selected>Category</option>
                     <option>Han Solo</option>
@@ -39,7 +48,7 @@ const Shop = () => {
                     <option>Han Solo</option>
                     <option>Greedo</option>
                 </select>
-                <div className=' bg-white w-full  flex flex-col  justify-center'>
+                <div className='bg-white w-full  flex flex-col  justify-center'>
                     <div className="p-3 border-b">
                         <h1 className="">Price Range</h1>
                     </div>
@@ -48,28 +57,34 @@ const Shop = () => {
                             id="range-slider-gradient"
                             className="margin-lg"
                             step={"any"}
+                            defaultValue={priceRange}
+                            onInput={handlePriceChange}
                         />
                     </div>
                     <div className="flex items-center justify-around pb-5">
                         <div className="flex justify-center items-center border w-20 h-10">
-                            <p>104,0</p>
+                            <input className="input input-bordered w-20" type="text" />
                         </div>
                         <div className="flex justify-center items-center border w-20 h-10">
-                            <p>108,0</p>
+                            <input className="input input-bordered w-20" type="text" />
                         </div>
                     </div>
                 </div>
             </div>
             <div className='w-full min-h-screen'>
-                <div className=" bg-white flex justify-between items-center w-[96%] m-auto p-2">
+                <div className=" space-x-2 bg-white flex justify-between items-center w-[96%] m-auto p-2">
                     <div>
                         <h1 className="hidden lg:block">All Laptop</h1>
                         <div className="md:hidden">
                             <FaChartBar className="cursor-pointer" onClick={toggleSidebar} />
                         </div>
                     </div>
+                    <div className="flex items-center border px-3 rounded-xl">
+                        <input className="input lg:w-80 w-full" placeholder="Search" type="text" />
+                        <FaSearch className=""></FaSearch>
+                    </div>
                     <div className="flex items-center">
-                        <h3 className="w-28">Sort By:</h3>
+                        <h3 className="w-28 hidden lg:block">Sort By:</h3>
                         <select className="select select-bordered w-full">
                             <option disabled selected>Default</option>
                             <option>Han Solo</option>
