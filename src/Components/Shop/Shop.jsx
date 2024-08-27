@@ -3,7 +3,8 @@ import "react-range-slider-input/dist/style.css";
 import './Shop.css'
 import card from '../../assets/s1.png'
 import { useState } from "react";
-import { FaChartBar, FaSearch } from "react-icons/fa";
+import { FaChartBar, FaFilter, FaSearch } from "react-icons/fa";
+import { FaFilterCircleXmark } from "react-icons/fa6";
 
 const Shop = () => {
 
@@ -25,7 +26,7 @@ const Shop = () => {
     return (
         <div className='flex bg-[#f2f4f8] pt-10 relative'>
             {/* Product Filtering */}
-            <div className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 translate-y-16 transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-white w-72 min-h-screen space-y-2`}>
+            <div className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${isOpen ? 'translate-x-2 translate-y-16 p-3 border ' : '-translate-x-full'} transition-transform duration-300 ease-in-out   md:relative md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}>
                 <select className="select select-bordered w-full">
                     <option disabled selected>Category</option>
                     <option>Han Solo</option>
@@ -39,12 +40,7 @@ const Shop = () => {
                     <option>Green</option>
                 </select>
                 <select className="select select-bordered w-full">
-                    <option disabled selected>Category</option>
-                    <option>Han Solo</option>
-                    <option>Greedo</option>
-                </select>
-                <select className="select select-bordered w-full">
-                    <option disabled selected>Category</option>
+                    <option disabled selected>Brand Name</option>
                     <option>Han Solo</option>
                     <option>Greedo</option>
                 </select>
@@ -76,7 +72,16 @@ const Shop = () => {
                     <div>
                         <h1 className="hidden lg:block">All Laptop</h1>
                         <div className="md:hidden">
-                            <FaChartBar className="cursor-pointer" onClick={toggleSidebar} />
+                            {
+                                !isOpen ? <>
+                                    <FaFilter className="text-2xl text-[#00bba6] cursor-pointer" onClick={toggleSidebar} />
+
+                                </>
+                                    : <>
+                                        <FaFilterCircleXmark className="text-2xl text-red-500 cursor-pointer" onClick={toggleSidebar} />
+                                    </>
+                            }
+
                         </div>
                     </div>
                     <div className="flex items-center border px-3 rounded-xl">
