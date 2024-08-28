@@ -2,6 +2,9 @@ import React from 'react';
 import card1 from '../../assets/s2.png'
 
 const FeaturedProduct = () => {
+
+    
+
     return (
         <div>
             <div className='space-y-3 my-20'>
