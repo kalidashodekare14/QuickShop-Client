@@ -1,6 +1,7 @@
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./Shop.css";
+import Select from "react-select";
 // import card from "../../assets/s1.png";
 import {useState} from "react";
 import {FaFilter, FaSearch} from "react-icons/fa";
@@ -11,8 +12,12 @@ import {useQuery} from "@tanstack/react-query";
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 500]);
-  // const [minPrice, setMinPrice] = useState("")
-  // const [maxPrice, setMaxPrice] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState(null);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -32,6 +37,58 @@ const Shop = () => {
     },
   });
 
+  const categories = Array.from(
+    new Set(allProducts.map((res) => res.category))
+  );
+
+  const brands = Array.from(new Set(allProducts.map((res) => res.brand)));
+
+  const categoryOptions = categories.map((category) => ({
+    value: category,
+    label: category,
+  }));
+
+  const brandOptions = brands.map((brand) => ({
+    value: brand,
+    label: brand,
+  }));
+
+  const filterProducts = allProducts.filter((product) => {
+    const matchedCategories = selectedCategory
+      ? product.category === selectedCategory.value
+      : true;
+    const matchedBrands = selectedBrand
+      ? product.brand === selectedBrand.value
+      : true;
+    const matchedSearchQueries = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchedPriceRange =
+      product.price >= minPrice && product.price <= maxPrice;
+    return (
+      matchedCategories &&
+      matchedBrands &&
+      matchedSearchQueries &&
+      matchedPriceRange
+    );
+  });
+
+  // Sort products based on selected sort order
+  const sortProducts = (products) => {
+    if (sortOrder === "lowToHigh") {
+      return products.sort((a, b) => a.price - b.price);
+    } else if (sortOrder === "highToLow") {
+      return products.sort((a, b) => b.price - a.price);
+    } else if (sortOrder === "newest") {
+      return products.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortOrder === "oldest") {
+      return products.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+  };
+
+  // Apply sorting to the filtered products
+  const sortedProducts = sortProducts([...filterProducts]);
+
   return (
     <div className="flex bg-[#f2f4f8] pt-10 relative">
       {/* Product Filtering */}
@@ -42,30 +99,32 @@ const Shop = () => {
             : "-translate-x-full"
         } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
       >
-        <select className="select select-bordered w-full">
-          <option disabled selected>
-            Category
-          </option>
-          <option>Han Solo</option>
-          <option>Greedo</option>
-        </select>
-        <select className="select select-bordered w-full">
-          <option disabled selected>
-            Color
-          </option>
-          <option>Black</option>
-          <option>Orange</option>
-          <option>Blue</option>
-          <option>Green</option>
-        </select>
-        <select className="select select-bordered w-full">
-          <option disabled selected>
-            Brand Name
-          </option>
-          <option>Han Solo</option>
-          <option>Greedo</option>
-        </select>
-        <div className="bg-white w-full  flex flex-col  justify-center">
+        <div className="category">
+          <h4 className="text-xl font-semibold">Category</h4>
+          <Select
+            className="md:w-72 mt-2"
+            isClearable
+            placeholder="Select a category"
+          />
+        </div>
+        <div className="category mt-3">
+          <h4 className="text-xl font-semibold">Color</h4>
+          <Select
+            className="md:w-72 mt-2"
+            isClearable
+            placeholder="Select a category"
+          />
+        </div>
+        <div className="category mt-3">
+          <h4 className="text-xl font-semibold">Brand</h4>
+          <Select
+            className="md:w-72 mt-2"
+            isClearable
+            placeholder="Select a category"
+          />
+        </div>
+
+        <div className="bg-white w-full  mt-8 flex flex-col  justify-center">
           <div className="p-3 border-b">
             <h1 className="">Price Range</h1>
           </div>
