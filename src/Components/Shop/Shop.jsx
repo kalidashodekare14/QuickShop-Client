@@ -201,8 +201,8 @@ const Shop = () => {
                 <div className="">
                   <img className=" border h-60" src={product.image} alt="" />
                 </div>
-                <div className="text-center text-lg px-2 font-semibold">
-                  <h1>{product.name}</h1>
+                <div className="space-y-3 mt-3 text-center text-lg px-1 font-semibold">
+                  <h1 className="text-[18px]">{product.name.slice(0, 39)}</h1>
                   <p>$150</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
