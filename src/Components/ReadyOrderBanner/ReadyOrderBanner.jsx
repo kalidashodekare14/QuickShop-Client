@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -8,9 +8,11 @@ import card1 from '../../assets/s2.png'
 import card2 from '../../assets/s3.png'
 import card3 from '../../assets/s4.png'
 import card5 from '../../assets/s6.png'
+import { dataContext } from '../../DataProvider/DataProvider';
 
 const ReadyOrderBanner = () => {
 
+    const { allProducts } = useContext(dataContext)
 
     const responsive = {
         superLargeDesktop: {
@@ -42,142 +44,29 @@ const ReadyOrderBanner = () => {
                 autoPlaySpeed={3000}
                 infinite={true}
                 responsive={responsive}>
+                {
+                    allProducts.map(product => (
+                        <div className="relative border flex flex-col justify-center items-center me-2">
+                            <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
+                                <h1 className="text-white">25 % OFF</h1>
+                            </div>
+                            <div className="w-full">
+                                <img className="w-full h-[30vh]" src={product.image} alt="" />
+                            </div>
+                            <div className="text-center text-2xl">
+                                <h1 className='text-[20px]'>{product.name.slice(0, 39)}</h1>
+                                <p>$150</p>
+                            </div>
+                            <div className="flex items-center gap-3 mt-5 mb-5">
+                                <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                                <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
+                            </div>
+                        </div>
+                    ))
+                }
                 {/* card 1 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 2 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card1} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 3 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card2} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 4 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card3} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 6 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card5} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 7 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 8 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
-                {/* card 9 */}
-                <div className="relative border flex flex-col justify-center items-center py-5 me-2">
-                    <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                        <h1 className="text-white">25 % OFF</h1>
-                    </div>
-                    <div className="p-5">
-                        <img className="w-40 h-40" src={card} alt="" />
-                    </div>
-                    <div className="text-center text-2xl">
-                        <h1>Full Shart</h1>
-                        <p>$150</p>
-                    </div>
-                    <div className="flex items-center gap-3 mt-5">
-                        <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                        <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
-                    </div>
-                </div>
+
+
             </Carousel>
         </div>
     );
