@@ -2,7 +2,6 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./Shop.css";
 import Select from "react-select";
-// import card from "../../assets/s1.png";
 import {useState} from "react";
 import {FaFilter, FaSearch} from "react-icons/fa";
 import {FaFilterCircleXmark} from "react-icons/fa6";
@@ -11,22 +10,19 @@ import {useQuery} from "@tanstack/react-query";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [priceRange, setPriceRange] = useState([0, 1000]); // Initial price range state
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   const handlePriceChange = (v) => {
-    setPriceRange(v);
+    setPriceRange(v); // Update the price range when the slider changes
   };
-  // ------------------------------------
 
   const axiosCommon = useAxiosCommon();
   const {data: allProducts = []} = useQuery({
@@ -41,7 +37,7 @@ const Shop = () => {
     new Set(allProducts.map((res) => res.category))
   );
 
-  const brands = Array.from(new Set(allProducts.map((res) => res.brand)));
+  const brands = Array.from(new Set(allProducts.map((res) => res.brandName)));
 
   const categoryOptions = categories.map((category) => ({
     value: category,
@@ -58,13 +54,13 @@ const Shop = () => {
       ? product.category === selectedCategory.value
       : true;
     const matchedBrands = selectedBrand
-      ? product.brand === selectedBrand.value
+      ? product.brandName === selectedBrand.value
       : true;
     const matchedSearchQueries = product.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchedPriceRange =
-      product.price >= minPrice && product.price <= maxPrice;
+      product.price >= priceRange[0] && product.price <= priceRange[1]; // Filter by selected price range
     return (
       matchedCategories &&
       matchedBrands &&
@@ -84,6 +80,7 @@ const Shop = () => {
     } else if (sortOrder === "oldest") {
       return products.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
+    return products;
   };
 
   // Apply sorting to the filtered products
@@ -104,14 +101,8 @@ const Shop = () => {
           <Select
             className="md:w-72 mt-2"
             isClearable
-            placeholder="Select a category"
-          />
-        </div>
-        <div className="category mt-3">
-          <h4 className="text-xl font-semibold">Color</h4>
-          <Select
-            className="md:w-72 mt-2"
-            isClearable
+            options={categoryOptions}
+            onChange={(selectOptions) => setSelectedCategory(selectOptions)}
             placeholder="Select a category"
           />
         </div>
@@ -119,6 +110,8 @@ const Shop = () => {
           <h4 className="text-xl font-semibold">Brand</h4>
           <Select
             className="md:w-72 mt-2"
+            options={brandOptions}
+            onChange={(selectedOptions) => setSelectedBrand(selectedOptions)}
             isClearable
             placeholder="Select a category"
           />
@@ -132,17 +125,29 @@ const Shop = () => {
             <RangeSlider
               id="range-slider-gradient"
               className="margin-lg"
-              step={"any"}
-              defaultValue={priceRange}
-              onInput={handlePriceChange}
+              min={0}
+              max={1000}
+              step={10}
+              value={priceRange} // Use priceRange state for the slider value
+              onInput={handlePriceChange} // Handle price change
             />
           </div>
           <div className="flex items-center justify-around pb-5">
             <div className="flex justify-center items-center border w-20 h-10">
-              <input className="input input-bordered w-20" type="text" />
+              <input
+                className="input input-bordered w-20"
+                type="text"
+                value={priceRange[0]} // Show min price in the input box
+                readOnly
+              />
             </div>
             <div className="flex justify-center items-center border w-20 h-10">
-              <input className="input input-bordered w-20" type="text" />
+              <input
+                className="input input-bordered w-20"
+                type="text"
+                value={priceRange[1]} // Show max price in the input box
+                readOnly
+              />
             </div>
           </div>
         </div>
@@ -150,7 +155,6 @@ const Shop = () => {
       <div className="w-full min-h-screen md:ml-80">
         <div className=" space-x-2 bg-white flex justify-between items-center w-[96%] m-auto p-2">
           <div>
-            <h1 className="hidden lg:block">All Laptop</h1>
             <div className="md:hidden">
               {!isOpen ? (
                 <>
@@ -169,9 +173,11 @@ const Shop = () => {
               )}
             </div>
           </div>
-          <div className="flex items-center border px-3 rounded-xl">
+          <div className=" flex items-center  border px-3 rounded-xl">
             <input
-              className="input lg:w-80 w-full"
+              className=" outline-none py-2 lg:w-80 w-full"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search"
               type="text"
             />
@@ -179,18 +185,21 @@ const Shop = () => {
           </div>
           <div className="flex items-center">
             <h3 className="w-28 hidden lg:block">Sort By:</h3>
-            <select className="select select-bordered w-full">
-              <option disabled selected>
-                Default
-              </option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
-            </select>
+            <Select
+              className=" w-full"
+              options={[
+                {value: "lowToHigh", label: "Price: Low to High"},
+                {value: "highToLow", label: "Price: High to Low"},
+              ]}
+              isClearable
+              placeholder="Select sort order"
+              onChange={(selectedOption) => setSortOrder(selectedOption.value)}
+            />
           </div>
         </div>
         <div className="w-[96%] m-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-            {allProducts.map((product) => (
+            {sortedProducts.map((product) => (
               <div
                 key={product._id}
                 className="relative border flex flex-col justify-center items-center py-5 me-2 bg-white rounded-lg"
@@ -203,14 +212,14 @@ const Shop = () => {
                 </div>
                 <div className="space-y-3 mt-3 text-center text-lg px-1 font-semibold">
                   <h1 className="text-[18px]">{product.name.slice(0, 39)}</h1>
-                  <p>$150</p>
+                  <p>${product.price}</p> {/* Display product price */}
                 </div>
                 <div className="flex items-center gap-3 mt-5">
                   <button className="btn bg-[#00bba6] text-white rounded-md">
                     Buy Now
                   </button>
-                  <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">
-                    Add to Cart
+                  <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
+                    Details
                   </button>
                 </div>
               </div>
