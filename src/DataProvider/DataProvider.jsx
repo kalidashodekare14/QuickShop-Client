@@ -18,13 +18,27 @@ const DataProvider = ({ children }) => {
         },
     });
 
+    // Ready Top Data Called
+    const { data: readyOrder = [] } = useQuery({
+        queryKey: ["allProducts"],
+        queryFn: async () => {
+            const res = await axiosCommon.get("/allProducts");
+            return res.data;
+        },
+    });
+
+    // Featured Data Called
+    const { data: featuredProduct = [] } = useQuery({
+        queryKey: ["allProducts"],
+        queryFn: async () => {
+            const res = await axiosCommon.get("/allProducts");
+            return res.data;
+        },
+    });
 
 
-    
 
-
-
-    const dataValues = { allProducts }
+    const dataValues = { allProducts, featuredProduct, readyOrder }
 
     return (
         <dataContext.Provider value={dataValues}>

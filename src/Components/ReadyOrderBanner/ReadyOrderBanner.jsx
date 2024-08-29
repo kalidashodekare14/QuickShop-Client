@@ -12,7 +12,7 @@ import { dataContext } from '../../DataProvider/DataProvider';
 
 const ReadyOrderBanner = () => {
 
-    const { allProducts } = useContext(dataContext)
+    const { readyOrder } = useContext(dataContext)
 
     const responsive = {
         superLargeDesktop: {
@@ -45,7 +45,7 @@ const ReadyOrderBanner = () => {
                 infinite={true}
                 responsive={responsive}>
                 {
-                    allProducts.map(product => (
+                    readyOrder.map(product => (
                         <div className="relative border flex flex-col justify-center items-center me-2">
                             <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                                 <h1 className="text-white">25 % OFF</h1>
