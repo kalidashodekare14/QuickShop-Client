@@ -193,17 +193,17 @@ const Shop = () => {
             {allProducts.map((product) => (
               <div
                 key={product._id}
-                className="relative border flex flex-col justify-center items-center py-5 me-2 bg-white rounded-lg"
+                className="relative border flex flex-col justify-center items-center pb-3 me-2 bg-white rounded-lg"
               >
                 <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                  <h1 className="text-white">25 % OFF</h1>
+                  <h1 className="text-white">{product.percentOff}</h1>
                 </div>
                 <div className="">
                   <img className=" border h-60" src={product.image} alt="" />
                 </div>
                 <div className="space-y-3 mt-3 text-center text-lg px-1 font-semibold">
                   <h1 className="text-[18px]">{product.name.slice(0, 39)}</h1>
-                  <p>$150</p>
+                  <p>${product.price}</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
                   <button className="btn bg-[#00bba6] text-white rounded-md">
