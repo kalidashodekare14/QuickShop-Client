@@ -202,10 +202,10 @@ const Shop = () => {
             {sortedProducts.map((product) => (
               <div
                 key={product._id}
-                className="relative border flex flex-col justify-center items-center py-5 me-2 bg-white rounded-lg"
+                className="relative border flex flex-col justify-center items-center pb-3 me-2 bg-white rounded-lg"
               >
                 <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-                  <h1 className="text-white">25 % OFF</h1>
+                  <h1 className="text-white">{product.percentOff}</h1>
                 </div>
                 <div className="">
                   <img className=" border h-60" src={product.image} alt="" />

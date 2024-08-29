@@ -7,7 +7,9 @@ import './Home.css'
 import ReadyOrderBanner from "../../Components/ReadyOrderBanner/ReadyOrderBanner";
 import FeaturedProduct from "../../Components/FeaturedProduct/FeaturedProduct";
 
+
 const Home = () => {
+
 
 
   return (
