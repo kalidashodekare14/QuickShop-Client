@@ -2,11 +2,11 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./Shop.css";
 import Select from "react-select";
-import {useState} from "react";
-import {FaFilter, FaSearch} from "react-icons/fa";
-import {FaFilterCircleXmark} from "react-icons/fa6";
+import { useState } from "react";
+import { FaFilter, FaSearch } from "react-icons/fa";
+import { FaFilterCircleXmark } from "react-icons/fa6";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +25,7 @@ const Shop = () => {
   };
 
   const axiosCommon = useAxiosCommon();
-  const {data: allProducts = []} = useQuery({
+  const { data: allProducts = [] } = useQuery({
     queryKey: ["allProducts"],
     queryFn: async () => {
       const res = await axiosCommon.get("/allProducts");
@@ -90,34 +90,12 @@ const Shop = () => {
     <div className="flex bg-[#f2f4f8] pt-10 relative">
       {/* Product Filtering */}
       <div
-        className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${
-          isOpen
-            ? "translate-x-2 translate-y-16 p-3 border "
-            : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
+        className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${isOpen
+          ? "translate-x-2 translate-y-16 p-3 border "
+          : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
       >
-        <div className="category">
-          <h4 className="text-xl font-semibold">Category</h4>
-          <Select
-            className="md:w-72 mt-2"
-            isClearable
-            options={categoryOptions}
-            onChange={(selectOptions) => setSelectedCategory(selectOptions)}
-            placeholder="Select a category"
-          />
-        </div>
-        <div className="category mt-3">
-          <h4 className="text-xl font-semibold">Brand</h4>
-          <Select
-            className="md:w-72 mt-2"
-            options={brandOptions}
-            onChange={(selectedOptions) => setSelectedBrand(selectedOptions)}
-            isClearable
-            placeholder="Select a category"
-          />
-        </div>
-
-        <div className="bg-white w-full  mt-8 flex flex-col  justify-center">
+        <div className="bg-white w-full  flex flex-col  justify-center">
           <div className="p-3 border-b">
             <h1 className="">Price Range</h1>
           </div>
@@ -151,6 +129,28 @@ const Shop = () => {
             </div>
           </div>
         </div>
+        <div className="category">
+          <h4 className="text-xl font-semibold">Category</h4>
+          <Select
+            className="md:w-72 mt-2"
+            isClearable
+            options={categoryOptions}
+            onChange={(selectOptions) => setSelectedCategory(selectOptions)}
+            placeholder="Select a category"
+          />
+        </div>
+        <div className="category mt-3">
+          <h4 className="text-xl font-semibold">Brand</h4>
+          <Select
+            className="md:w-72 mt-2"
+            options={brandOptions}
+            onChange={(selectedOptions) => setSelectedBrand(selectedOptions)}
+            isClearable
+            placeholder="Select a category"
+          />
+        </div>
+
+
       </div>
       <div className="w-full min-h-screen md:ml-80">
         <div className=" space-x-2 bg-white flex justify-between items-center w-[96%] m-auto p-2">
@@ -188,8 +188,8 @@ const Shop = () => {
             <Select
               className=" w-full"
               options={[
-                {value: "lowToHigh", label: "Price: Low to High"},
-                {value: "highToLow", label: "Price: High to Low"},
+                { value: "lowToHigh", label: "Price: Low to High" },
+                { value: "highToLow", label: "Price: High to Low" },
               ]}
               isClearable
               placeholder="Select sort order"
