@@ -219,7 +219,7 @@ const Shop = () => {
                     Buy Now
                   </button>
                   <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
-                    Details
+                    Add to cart
                   </button>
                 </div>
               </div>
