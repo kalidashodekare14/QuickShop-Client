@@ -89,8 +89,14 @@ const Shop = () => {
 
 
   // add to cart product
-  const handleAddCart = (e) => {
-    console.log(e)
+  const handleAddCart = (product) => {
+
+    let cart = JSON.parse(localStorage.getItem('addCart')) || [];
+
+    cart.push(product._id)
+
+    localStorage.setItem('addCart', JSON.stringify(cart))
+
   }
 
 
@@ -223,7 +229,7 @@ const Shop = () => {
                   <p>${product.price}</p> {/* Display product price */}
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                  <button onClick={() => handleAddCart(product._id)} className="btn bg-[#00bba6] text-white rounded-md">
+                  <button onClick={() => handleAddCart(product)} className="btn bg-[#00bba6] text-white rounded-md">
                     Add to Cart
                   </button>
                   <Link to={`/details/${product._id}`}>
