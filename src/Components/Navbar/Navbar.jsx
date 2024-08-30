@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "/logo.png";
 import { FaCartPlus } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartLenth, setIsCartLength] = useState(0)
+
+
+
+  useEffect(() => {
+    const allCart = JSON.parse(localStorage.getItem("addCart")) || []
+    setIsCartLength(allCart.length)
+  }, [])
+
 
   return (
     <nav className="sticky top-0 z-30 w-full bg-[#00bba6] shadow">
@@ -95,7 +104,7 @@ const Navbar = () => {
               href="#"
             >
               <FaCartPlus className="text-3xl text-white" />
-              <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
+              <span className="absolute top-0 translate-x-6 -translate-y-4 p-2 text-xs text-white bg-blue-500 rounded-full">{isCartLenth}</span>
             </a>
           </div>
         </div>
