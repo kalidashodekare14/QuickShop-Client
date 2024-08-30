@@ -7,6 +7,7 @@ import { FaFilter, FaSearch } from "react-icons/fa";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,6 +86,13 @@ const Shop = () => {
 
   // Apply sorting to the filtered products
   const sortedProducts = sortProducts([...filterProducts]);
+
+
+  // add to cart product
+  const handleAddCart = (e) => {
+    console.log(e)
+  }
+
 
   return (
     <div className="flex bg-[#f2f4f8] pt-10 relative">
@@ -215,12 +223,14 @@ const Shop = () => {
                   <p>${product.price}</p> {/* Display product price */}
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                  <button className="btn bg-[#00bba6] text-white rounded-md">
-                    Buy Now
+                  <button onClick={() => handleAddCart(product._id)} className="btn bg-[#00bba6] text-white rounded-md">
+                    Add to Cart
                   </button>
-                  <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
-                    Details
-                  </button>
+                  <Link to={`/details/${product._id}`}>
+                    <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
+                      Details
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}
