@@ -8,6 +8,7 @@ import {FaFilterCircleXmark} from "react-icons/fa6";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import {useQuery} from "@tanstack/react-query";
 import {Audio} from "react-loader-spinner";
+import {Link} from "react-router-dom";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -232,6 +233,11 @@ const Shop = () => {
                   <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
                     Add to cart
                   </button>
+                  <Link to={`/details/${product._id}`}>
+                    <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
+                      Details
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}

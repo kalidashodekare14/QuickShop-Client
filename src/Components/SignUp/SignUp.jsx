@@ -1,14 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loginImage from '../../assets/login.jpg'
 import { useForm } from 'react-hook-form';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
 
     const { signUpSystem } = useAuth()
+    const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -20,7 +24,28 @@ const SignUp = () => {
         console.log(data.email, data.password)
         signUpSystem(data.email, data.password)
             .then(res => {
-                console.log(res.user)
+                const userInfo = {
+                    email: data.email,
+                    password: data.password
+                }
+                console.log(userInfo)
+                axiosSecure.post('/all-users', userInfo)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Your SinUp Successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/')
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                    })
             })
             .catch(error => {
                 console.log(error.message)
