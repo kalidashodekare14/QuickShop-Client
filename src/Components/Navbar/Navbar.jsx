@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "/logo.png";
 import { FaCartPlus } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { dataContext } from "../../DataProvider/DataProvider";
+import { useCart } from "react-use-cart";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartLenth, setIsCartLength] = useState(0)
+  const { allProductLoading, refetch } = useContext(dataContext)
 
+  console.log(isCartLenth)
 
+  const {
+    isEmpty,
+    totalUniqueItems,
+    items,
+    updateItemQuantity,
+    removeItem,
+  } = useCart()
 
-  useEffect(() => {
-    const allCart = JSON.parse(localStorage.getItem("addCart")) || []
-    setIsCartLength(allCart.length)
-  }, [])
+  // useEffect(() => {
+  //   const allCart = JSON.parse(localStorage.getItem("addCart")) || []
+  //   setIsCartLength(allCart.length)
+  //   refetch()
+  // }, [])
 
 
   return (
@@ -97,16 +109,18 @@ const Navbar = () => {
               About
             </a>
           </div>
+          <Link to="/cart-checkout">
+            <div className="flex justify-center md:block bg-[#00bba6] ">
+              <a
+                className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
+                href="#"
+              >
+                <FaCartPlus className="text-3xl text-white" />
+                <span className="absolute top-0 translate-x-6 -translate-y-4 p-2 text-xs text-white bg-blue-500 rounded-full">{totalUniqueItems}</span>
+              </a>
+            </div>
+          </Link>
 
-          <div className="flex justify-center md:block bg-[#00bba6] ">
-            <a
-              className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
-              href="#"
-            >
-              <FaCartPlus className="text-3xl text-white" />
-              <span className="absolute top-0 translate-x-6 -translate-y-4 p-2 text-xs text-white bg-blue-500 rounded-full">{isCartLenth}</span>
-            </a>
-          </div>
         </div>
       </div>
     </nav>
