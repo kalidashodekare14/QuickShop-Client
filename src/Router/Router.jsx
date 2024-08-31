@@ -5,6 +5,7 @@ import Shop from "../Components/Shop/Shop";
 import SignUp from "../Components/SignUp/SignUp";
 import Login from "../Components/Login/Login";
 import Details from "../Components/Details/Details";
+import CartCheckout from "../Components/CartCheckout/CartCheckout";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: '/details/:id',
                 element: <Details></Details>
+            },
+            {
+                path: '/cart-checkout',
+                element: <CartCheckout />
             }
         ]
 

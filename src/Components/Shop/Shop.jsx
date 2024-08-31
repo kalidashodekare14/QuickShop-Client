@@ -2,12 +2,14 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./Shop.css";
 import Select from "react-select";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useCart } from "react-use-cart";
+import { dataContext } from "../../DataProvider/DataProvider";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,9 @@ const Shop = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
+  const { allProducts, refetch } = useContext(dataContext)
+  // cart add 
+  const { addItem } = useCart();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -25,14 +30,14 @@ const Shop = () => {
     setPriceRange(v); // Update the price range when the slider changes
   };
 
-  const axiosCommon = useAxiosCommon();
-  const { data: allProducts = [] } = useQuery({
-    queryKey: ["allProducts"],
-    queryFn: async () => {
-      const res = await axiosCommon.get("/allProducts");
-      return res.data;
-    },
-  });
+  // const axiosCommon = useAxiosCommon();
+  // const { data: allProducts = [] } = useQuery({
+  //   queryKey: ["allProducts"],
+  //   queryFn: async () => {
+  //     const res = await axiosCommon.get("/allProducts");
+  //     return res.data;
+  //   },
+  // });
 
   const categories = Array.from(
     new Set(allProducts.map((res) => res.category))
@@ -89,15 +94,16 @@ const Shop = () => {
 
 
   // add to cart product
-  const handleAddCart = (product) => {
+  // const handleAddCart = (product) => {
+  //   let cart = JSON.parse(localStorage.getItem('addCart')) || [];
+  //   cart.push(product._id)
+  //   localStorage.setItem('addCart', JSON.stringify(cart))
+  //   refetch(false)
+  // }
 
-    let cart = JSON.parse(localStorage.getItem('addCart')) || [];
 
-    cart.push(product._id)
 
-    localStorage.setItem('addCart', JSON.stringify(cart))
 
-  }
 
 
   return (
@@ -229,7 +235,7 @@ const Shop = () => {
                   <p>${product.price}</p> {/* Display product price */}
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                  <button onClick={() => handleAddCart(product)} className="btn bg-[#00bba6] text-white rounded-md">
+                  <button onClick={() => addItem({...product, id: product._id })} className="btn bg-[#00bba6] text-white rounded-md">
                     Add to Cart
                   </button>
                   <Link to={`/details/${product._id}`}>
