@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from 'react-use-cart';
 import { FaDeleteLeft } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const CartCheckout = () => {
+
+    const [cartControl, setCartControl] = useState(1)
 
     const {
         isEmpty,
@@ -13,6 +16,32 @@ const CartCheckout = () => {
     } = useCart();
 
     // console.log(items)
+
+    const handleDeleteButton = (cart) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (removeItem(cart.id)) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
+
 
     return (
         <div>
@@ -44,11 +73,15 @@ const CartCheckout = () => {
                                             <td>Quality Control Specialist</td>
                                             <td>${cart.price}</td>
                                             <td>
-                                                <input className='input input-bordered' type="text" />
+                                                <div className='flex items-center'>
+                                                    <button onClick={() => updateItemQuantity(cart.id, Math.max(1, cart.quantity - 1))} className='btn'>-</button>
+                                                    <input value={cart.quantity} className='input input-bordered w-12' type="text" />
+                                                    <button onClick={() => updateItemQuantity(cart.id, cart.quantity + 1)} className='btn'>+</button>
+                                                </div>
                                             </td>
-                                            <td>${cart.price}</td>
+                                            <td>${cart.price * cart.quantity}</td>
                                             <td>
-                                                <div onClick={() => removeItem(cart.id)}>
+                                                <div onClick={() => handleDeleteButton(cart)}>
                                                     <FaDeleteLeft className='text-2xl text-red-500' />
                                                 </div>
                                             </td>
