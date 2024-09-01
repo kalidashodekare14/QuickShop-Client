@@ -5,10 +5,10 @@ import Select from "react-select";
 import {useState} from "react";
 import {FaFilter, FaSearch} from "react-icons/fa";
 import {FaFilterCircleXmark} from "react-icons/fa6";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
-import {useQuery} from "@tanstack/react-query";
 import {Audio} from "react-loader-spinner";
 import {Link} from "react-router-dom";
+import { useCart } from "react-use-cart";
+import useData from "../../hooks/useData";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,9 @@ const Shop = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
-  const { allProducts, refetch } = useContext(dataContext)
+  const { allProducts, loading } = useData()
+
+  console.log(allProducts)
   // cart add 
   const { addItem } = useCart();
 
@@ -83,7 +85,7 @@ const Shop = () => {
   // Apply sorting to the filtered products
   const sortedProducts = sortProducts([...filterProducts]);
 
-  return isLoading ? (
+  return loading ? (
     <div className="flex justify-center items-center md:mt-60">
       <Audio
         height="100"
@@ -222,16 +224,14 @@ const Shop = () => {
                   <p>${product.price}</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                  <button className="btn bg-[#00bba6] text-white rounded-md">
-                    Buy Now
-                  </button>
+                  
                   <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
-                    Add to cart
+                    Details
                   </button>
                   <Link to={`/details/${product._id}`}>
-                    <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
-                      Details
-                    </button>
+                  <button className="btn bg-[#00bba6] text-white rounded-md">
+                    Add to Cart
+                  </button>
                   </Link>
                 </div>
               </div>

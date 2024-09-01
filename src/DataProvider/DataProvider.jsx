@@ -14,7 +14,7 @@ const DataProvider = ({ children }) => {
     console.log(user?.email)
 
 
-    const { data: allProducts = [], refetch, isPending: allProductLoading } = useQuery({
+    const { data: allProducts = [], refetch, isLoading: loading } = useQuery({
         queryKey: ["allProducts"],
         queryFn: async () => {
             const res = await axiosCommon.get("/allProducts");
@@ -53,7 +53,7 @@ const DataProvider = ({ children }) => {
         },
     });
 
-    const dataValues = { allProducts, refetch, allProductLoading, featuredProduct, readyOrder, userData }
+    const dataValues = { allProducts, refetch, loading, featuredProduct, readyOrder, userData }
 
     return (
         <dataContext.Provider value={dataValues}>
