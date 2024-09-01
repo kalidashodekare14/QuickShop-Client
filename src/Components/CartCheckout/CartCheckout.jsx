@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from 'react-use-cart';
 import { FaDeleteLeft } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const CartCheckout = () => {
+
+    const salesTexRate = 0.1
+
 
     const {
         isEmpty,
@@ -10,9 +14,36 @@ const CartCheckout = () => {
         items,
         updateItemQuantity,
         removeItem,
+        cartTotal
     } = useCart();
 
-    // console.log(items)
+    const salesTax = cartTotal * salesTexRate
+    const grandTotal = cartTotal + salesTax
+
+    const handleDeleteButton = (cart) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (removeItem(cart.id)) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
 
     return (
         <div>
@@ -44,11 +75,15 @@ const CartCheckout = () => {
                                             <td>Quality Control Specialist</td>
                                             <td>${cart.price}</td>
                                             <td>
-                                                <input className='input input-bordered' type="text" />
+                                                <div className='flex items-center'>
+                                                    <button onClick={() => updateItemQuantity(cart.id, Math.max(1, cart.quantity - 1))} className='btn'>-</button>
+                                                    <input value={cart.quantity} className='input input-bordered w-12' type="text" />
+                                                    <button onClick={() => updateItemQuantity(cart.id, cart.quantity + 1)} className='btn'>+</button>
+                                                </div>
                                             </td>
-                                            <td>${cart.price}</td>
+                                            <td>${cart.price * cart.quantity}</td>
                                             <td>
-                                                <div onClick={() => removeItem(cart.id)}>
+                                                <div onClick={() => handleDeleteButton(cart)}>
                                                     <FaDeleteLeft className='text-2xl text-red-500' />
                                                 </div>
                                             </td>
@@ -70,20 +105,16 @@ const CartCheckout = () => {
                         </div>
                         <div className='mt-5'>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Shopping Cost : </h2>
-                                <h2>TBF</h2>
+                                <h2>Subtotal :</h2>
+                                <h2>${cartTotal}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Discount : </h2>
-                                <h2>$857</h2>
+                                <h2>Sales Tax :</h2>
+                                <h2>${salesTax}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Tex : </h2>
-                                <h2>TBF</h2>
-                            </div>
-                            <div className='mb-5 flex justify-between items-center'>
-                                <h2>Estimated Total : </h2>
-                                <h2>TBF</h2>
+                                <h2>Grand Total : </h2>
+                                <h2>${grandTotal}</h2>
                             </div>
                         </div>
                         <div className='flex justify-center items-center'>
