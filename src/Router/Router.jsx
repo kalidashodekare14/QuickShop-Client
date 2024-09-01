@@ -5,6 +5,8 @@ import Shop from "../Components/Shop/Shop";
 import SignUp from "../Components/SignUp/SignUp";
 import Login from "../Components/Login/Login";
 import Details from "../Components/Details/Details";
+import CartCheckout from "../Components/CartCheckout/CartCheckout";
+
 
 const router = createBrowserRouter([
     {
@@ -29,7 +31,12 @@ const router = createBrowserRouter([
             },
             {
                 path: '/details/:id',
-                element: <Details></Details>
+                element: <Details></Details>,
+                loader: ({params}) => fetch(`http://localhost:8000/details/${params.id}`)
+            },
+            {
+                path: '/cart-checkout',
+                element: <CartCheckout />
             }
         ]
 

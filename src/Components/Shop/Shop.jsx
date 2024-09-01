@@ -17,6 +17,9 @@ const Shop = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
+  const { allProducts, refetch } = useContext(dataContext)
+  // cart add 
+  const { addItem } = useCart();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

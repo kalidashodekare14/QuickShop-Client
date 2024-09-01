@@ -10,13 +10,16 @@ const DataProvider = ({ children }) => {
     const axiosCommon = useAxiosCommon();
 
 
-    const { data: allProducts = [] } = useQuery({
+    const { data: allProducts = [], refetch, isPending: allProductLoading } = useQuery({
         queryKey: ["allProducts"],
         queryFn: async () => {
             const res = await axiosCommon.get("/allProducts");
             return res.data;
         },
     });
+
+
+
 
     // Ready Top Data Called
     const { data: readyOrder = [] } = useQuery({
@@ -38,7 +41,7 @@ const DataProvider = ({ children }) => {
 
 
 
-    const dataValues = { allProducts, featuredProduct, readyOrder }
+    const dataValues = { allProducts, refetch, allProductLoading, featuredProduct, readyOrder }
 
     return (
         <dataContext.Provider value={dataValues}>
