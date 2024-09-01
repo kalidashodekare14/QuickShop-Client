@@ -20,8 +20,6 @@ const CartCheckout = () => {
     const salesTax = cartTotal * salesTexRate
     const grandTotal = cartTotal + salesTax
 
-    // console.log(items)
-
     const handleDeleteButton = (cart) => {
 
         Swal.fire({
@@ -45,7 +43,6 @@ const CartCheckout = () => {
             }
         });
     }
-
 
 
     return (
