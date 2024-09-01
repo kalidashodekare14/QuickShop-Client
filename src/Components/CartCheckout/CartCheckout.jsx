@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 
 const CartCheckout = () => {
 
-    const [cartControl, setCartControl] = useState(1)
+    const salesTexRate = 0.1
+
 
     const {
         isEmpty,
@@ -13,7 +14,11 @@ const CartCheckout = () => {
         items,
         updateItemQuantity,
         removeItem,
+        cartTotal
     } = useCart();
+
+    const salesTax = cartTotal * salesTexRate
+    const grandTotal = cartTotal + salesTax
 
     // console.log(items)
 
@@ -103,20 +108,16 @@ const CartCheckout = () => {
                         </div>
                         <div className='mt-5'>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Shopping Cost : </h2>
-                                <h2>TBF</h2>
+                                <h2>Subtotal :</h2>
+                                <h2>${cartTotal}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Discount : </h2>
-                                <h2>$857</h2>
+                                <h2>Sales Tax :</h2>
+                                <h2>${salesTax}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
-                                <h2>Tex : </h2>
-                                <h2>TBF</h2>
-                            </div>
-                            <div className='mb-5 flex justify-between items-center'>
-                                <h2>Estimated Total : </h2>
-                                <h2>TBF</h2>
+                                <h2>Grand Total : </h2>
+                                <h2>${grandTotal}</h2>
                             </div>
                         </div>
                         <div className='flex justify-center items-center'>
