@@ -1,6 +1,6 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loginImage from '../../assets/login.jpg'
 import { useForm } from 'react-hook-form';
 import { FaFacebookSquare } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth';
 const Login = () => {
 
     const { signInSystem } = useAuth()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -21,6 +22,7 @@ const Login = () => {
         signInSystem(data.email, data.password)
             .then(res => {
                 console.log(res.user)
+                navigate('/')
             })
             .catch(error => {
                 console.log(error.message)

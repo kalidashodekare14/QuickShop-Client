@@ -54,6 +54,7 @@ const ReadyOrderBanner = () => {
             <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
               <h1 className="text-white">25 % OFF</h1>
             </div>
+<<<<<<< HEAD
             <div className="w-full">
               <img className="w-full h-[30vh]" src={product.image} alt="" />
             </div>
@@ -75,6 +76,39 @@ const ReadyOrderBanner = () => {
       </Carousel>
     </div>
   );
+=======
+            <Carousel
+                autoPlay={true}
+                autoPlaySpeed={3000}
+                infinite={true}
+                responsive={responsive}>
+                {
+                    readyOrder.map(product => (
+                        <div key={product._id} className="relative border flex flex-col justify-center items-center me-2">
+                            <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
+                                <h1 className="text-white">25 % OFF</h1>
+                            </div>
+                            <div className="w-full">
+                                <img className="w-full h-[30vh]" src={product.image} alt="" />
+                            </div>
+                            <div className="text-center text-2xl">
+                                <h1 className='text-[20px]'>{product.name.slice(0, 39)}</h1>
+                                <p>$150</p>
+                            </div>
+                            <div className="flex items-center gap-3 mt-5 mb-5">
+                                <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
+                                <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
+                            </div>
+                        </div>
+                    ))
+                }
+                {/* card 1 */}
+
+
+            </Carousel>
+        </div>
+    );
+>>>>>>> 754fd8a23fb1d31eb7e07649e167341f7060ba94
 };
 
 export default ReadyOrderBanner;

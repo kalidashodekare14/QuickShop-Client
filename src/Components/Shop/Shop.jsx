@@ -29,14 +29,6 @@ const Shop = () => {
     setPriceRange(v);
   };
 
-  const axiosCommon = useAxiosCommon();
-  const {isLoading, data: allProducts = []} = useQuery({
-    queryKey: ["allProducts"],
-    queryFn: async () => {
-      const res = await axiosCommon.get("/allProducts");
-      return res.data;
-    },
-  });
 
   const categories = Array.from(
     new Set(allProducts.map((res) => res.category))

@@ -16,7 +16,7 @@ const FeaturedProduct = () => {
         {/* Card1 */}
         {
           featuredProduct.map(product => (
-            <div className="relative border flex flex-col justify-center items-center me-2">
+            <div key={product._id} className="relative border flex flex-col justify-center items-center me-2">
               <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                 <h1 className="text-white">25 % OFF</h1>
               </div>
