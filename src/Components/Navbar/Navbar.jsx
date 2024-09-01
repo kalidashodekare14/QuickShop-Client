@@ -1,16 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import logo from "/logo.png";
 import { FaCartPlus } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
-import { dataContext } from "../../DataProvider/DataProvider";
 import { useCart } from "react-use-cart";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCartLenth, setIsCartLength] = useState(0)
-  const { allProductLoading, refetch } = useContext(dataContext)
-
-  console.log(isCartLenth)
+  const { user, logOutSystem } = useAuth()
 
   const {
     isEmpty,
@@ -20,24 +17,22 @@ const Navbar = () => {
     removeItem,
   } = useCart()
 
-  // useEffect(() => {
-  //   const allCart = JSON.parse(localStorage.getItem("addCart")) || []
-  //   setIsCartLength(allCart.length)
-  //   refetch()
-  // }, [])
 
+  const handleLogoutSystem = () => {
+    logOutSystem()
+  }
 
   return (
     <nav className="sticky top-0 z-30 w-full bg-[#00bba6] shadow">
       <div className="mx-10 md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
-          <a href="#">
+          <p href="#">
             <img
               className="w-auto h-10 sm:h-10 my-2"
               src={logo}
               alt="QuickShop Logo"
             />
-          </a>
+          </p>
 
           <div className="flex lg:hidden">
             <button
@@ -96,30 +91,62 @@ const Navbar = () => {
             >
               Shop
             </NavLink>
-            <a
+            <p
               className="transition-colors duration-300 transform  dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               Contact
-            </a>
-            <a
+            </p>
+            <p
               className="transition-colors duration-300 transform dark:text-gray-200 dark:hover:text-blue-400  md:my-0 hover:bg-[#018576] hover:text-white text-white p-5 text-[20px]"
               href="#"
             >
               About
-            </a>
+            </p>
           </div>
           <Link to="/cart-checkout">
             <div className="flex justify-center md:block bg-[#00bba6] ">
-              <a
+              <p
                 className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
                 href="#"
               >
                 <FaCartPlus className="text-3xl text-white" />
                 <span className="absolute top-0 translate-x-6 -translate-y-4 p-2 text-xs text-white bg-blue-500 rounded-full">{totalUniqueItems}</span>
-              </a>
+              </p>
             </div>
           </Link>
+          <div className="ms-10">
+            {
+              user ? (
+                <div className=" dropdown dropdown-end">
+                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-[#00bba6] text-white font-medium  z-[1] w-52  shadow">
+                    <li>
+                      <Link to={"/profile"}>
+                        <p className="justify-between">
+                          Profile
+                        </p>
+                      </Link>
+                    </li>
+                    <li><p>Settings</p></li>
+                    <li><p onClick={handleLogoutSystem}>Logout</p></li>
+                  </ul>
+                </div>
+              ) : <div>
+                <Link to={"/login"}>
+                  <button className="btn">Login</button>
+                </Link>
+              </div>
+            }
+          </div>
 
         </div>
       </div>

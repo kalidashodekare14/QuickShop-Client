@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import useAxiosCommon from '../hooks/useAxiosCommon';
 import { useQuery } from '@tanstack/react-query';
+import useAuth from '../hooks/useAuth';
 
 export const dataContext = createContext(null);
 
@@ -8,6 +9,9 @@ const DataProvider = ({ children }) => {
 
     // const [isData, setIsData] = useState([])
     const axiosCommon = useAxiosCommon();
+    const { user } = useAuth()
+
+    console.log(user?.email)
 
 
     const { data: allProducts = [], refetch, isPending: allProductLoading } = useQuery({
@@ -23,7 +27,7 @@ const DataProvider = ({ children }) => {
 
     // Ready Top Data Called
     const { data: readyOrder = [] } = useQuery({
-        queryKey: ["allProducts"],
+        queryKey: ["readyOrder"],
         queryFn: async () => {
             const res = await axiosCommon.get("/allProducts");
             return res.data;
@@ -32,16 +36,24 @@ const DataProvider = ({ children }) => {
 
     // Featured Data Called
     const { data: featuredProduct = [] } = useQuery({
-        queryKey: ["allProducts"],
+        queryKey: ["featuredProduct"],
         queryFn: async () => {
             const res = await axiosCommon.get("/allProducts");
             return res.data;
         },
     });
 
+    // Users Profile Data
 
+    const { data: userData = [] } = useQuery({
+        queryKey: ["userData", user?.email],
+        queryFn: async () => {
+            const res = await axiosCommon.get(`/user-profile/${user?.email}`);
+            return res.data[0];
+        },
+    });
 
-    const dataValues = { allProducts, refetch, allProductLoading, featuredProduct, readyOrder }
+    const dataValues = { allProducts, refetch, allProductLoading, featuredProduct, readyOrder, userData }
 
     return (
         <dataContext.Provider value={dataValues}>
