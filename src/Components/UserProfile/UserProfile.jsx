@@ -1,10 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useData from '../../hooks/useData';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import useAuth from '../../hooks/useAuth';
+import useAxiosCommon from '../../hooks/useAxiosCommon';
+import { RotatingLines } from 'react-loader-spinner';
+
+const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const UserProfile = () => {
 
-    const { userData } = useData()
-    console.log(userData)
+    const { userData, userLoading, userRefetch } = useData()
+    const [uploading, setUploading] = useState(false)
+    const axiosCommon = useAxiosCommon()
+    const { user } = useAuth()
+
+    if (userLoading) {
+        return <div className='flex justify-center items-center h-[40vh]'>
+            <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+            />
+        </div>
+    }
+
+    const handleImageHosting = async (event) => {
+        const selectedFile = event.target.files[0]
+        setUploading(true)
+        const formData = new FormData()
+        formData.append('image', selectedFile)
+
+        try {
+            const res = await fetch(`${image_hosting_api}`, {
+                method: 'POST',
+                body: formData
+            })
+            const data = await res.json()
+            if (data.success) {
+                console.log(data.data.url)
+                const uploadImage = {
+                    image: data.data.url
+                }
+                axiosCommon.patch(`/user-image-update/${user?.email}`, uploadImage)
+                    .then(res => {
+                        console.log(res.data)
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                    })
+            }
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setUploading(false)
+
+        }
+        userRefetch()
+    }
+
 
     return (
         <div>
@@ -18,25 +79,50 @@ const UserProfile = () => {
                 <div className='flex w-[60%] m-auto bg-white border'>
                     <div className='flex-1 space-y-5 p-5'>
                         <div className='flex flex-col'>
-                            <label htmlFor="">Your Name</label>
-                            <input  className='input input-bordered' type="text" />
+                            <p>Your Name</p>
+                            <div className='border p-2 rounded-xl'>
+                                <h2>{userData.name ? userData?.name : 'N/A'}</h2>
+                            </div>
                         </div>
                         <div className='flex flex-col'>
-                            <label htmlFor="">Your Password</label>
-                            <input defaultValue={userData.password}  className='input input-bordered' type="password" />
+                            <p>Email Address</p>
+                            <div className='border p-2 rounded-xl'>
+                                <h2>{userData ? userData?.email : 'kalidash'}</h2>
+                            </div>
                         </div>
                         <div className='flex flex-col'>
-                            <label htmlFor="">Email Address</label>
-                            <input value={userData.email} className='input input-bordered' type="text" />
+                            <p>Current Address</p>
+                            <div className='border p-2 rounded-xl'>
+                                <h2>{userData.address ? userData?.address : 'N/A'}</h2>
+                            </div>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-5  items-center gap-3 w-40'>
                         <div className="avatar">
-                            <div className="w-32 rounded-3xl">
-                                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <div className="w-32 rounded-3xl border">
+
+                                {
+                                    uploading ? <RotatingLines
+                                        visible={true}
+                                        height="96"
+                                        width="96"
+                                        color="grey"
+                                        strokeWidth="5"
+                                        animationDuration="0.75"
+                                        ariaLabel="rotating-lines-loading"
+                                        wrapperStyle={{}}
+                                        wrapperClass=""
+                                    /> : <img src={userData.image} alt='No Image' />
+                                }
                             </div>
                         </div>
-                        <button className='btn'>Upload a Picture</button>
+                        <form>
+                            <label>
+                                <input onChange={handleImageHosting} type="file" hidden />
+                                <div className='w-40 h-9 border flex flex-col bg-[#00bba6] text-white rounded-2xl justify-center items-center'>{uploading ? "Uploading.." : "Upload a Picture"}</div>
+                                {/* <div class="flex w-28 h-9 px-2 flex-col bg-indigo-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">Choose File</div> */}
+                            </label>
+                        </form>
                     </div>
                 </div>
             </div>
