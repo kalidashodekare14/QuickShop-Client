@@ -229,7 +229,7 @@ const Shop = () => {
                       Details
                     </button>
                   </Link>
-                  <button onClick={() => addItem({...product, id: product._id})} className="btn bg-[#00bba6] text-white rounded-md">
+                  <button onClick={() => addItem({ ...product, id: product._id })} className="btn bg-[#00bba6] text-white rounded-md">
                     Add to Cart
                   </button>
                 </div>

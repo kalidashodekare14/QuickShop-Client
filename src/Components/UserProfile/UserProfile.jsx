@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
 import useAxiosCommon from '../../hooks/useAxiosCommon';
 import { RotatingLines } from 'react-loader-spinner';
+import { LuSaveAll } from "react-icons/lu";
 
 const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
@@ -15,6 +16,7 @@ const UserProfile = () => {
     const [uploading, setUploading] = useState(false)
     const axiosCommon = useAxiosCommon()
     const { user } = useAuth()
+    const [nameClicker, setNameClicker] = useState(true)
 
     if (userLoading) {
         return <div className='flex justify-center items-center h-[40vh]'>
@@ -66,6 +68,26 @@ const UserProfile = () => {
         userRefetch()
     }
 
+    const handleNameChange = () => {
+        setNameClicker(!nameClicker)
+    }
+
+    const handleChangesForName = e => {
+        e.preventDefault()
+        const name = e.target.name.value
+        // console.log(name)
+        const userNameInfo = {
+            name: name
+        }
+        axiosCommon.patch(`/user-name-change/${user?.email}`, userNameInfo)
+            .then(res => {
+                console.log(res.data)
+                userRefetch()
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
 
     return (
         <div>
@@ -80,14 +102,37 @@ const UserProfile = () => {
                     <div className='flex-1 space-y-5 p-5'>
                         <div className='flex flex-col'>
                             <p>Your Name</p>
-                            <div className='border p-2 rounded-xl'>
-                                <h2>{userData.name ? userData?.name : 'N/A'}</h2>
+                            <div>
+                                {
+                                    nameClicker ? (
+                                        <div className='border p-3 rounded-xl'>
+                                            <h2>{userData.name ? userData?.name : 'N/A'}</h2>
+                                        </div>
+                                    ) : (
+                                        <form onSubmit={handleChangesForName} className='flex items-center border rounded-2xl'>
+                                            <input placeholder='Enter Your Name' className='input  w-full' name='name' type="text" />
+                                            <button type='submit' className='text-2xl '>
+                                                <LuSaveAll />
+                                            </button>
+
+                                        </form>
+                                    )
+                                }
                             </div>
-                        </div>
-                        <div className='flex flex-col'>
-                            <p>Email Address</p>
-                            <div className='border p-2 rounded-xl'>
-                                <h2>{userData ? userData?.email : 'kalidash'}</h2>
+
+                            <div className='flex justify-end  cursor-pointer'>
+                                {
+                                    nameClicker ? (
+                                        <div onClick={handleNameChange}>
+                                            <span>Change</span>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <span>Change</span>
+                                        </div>
+                                    )
+                                }
+
                             </div>
                         </div>
                         <div className='flex flex-col'>
@@ -95,6 +140,21 @@ const UserProfile = () => {
                             <div className='border p-2 rounded-xl'>
                                 <h2>{userData.address ? userData?.address : 'N/A'}</h2>
                             </div>
+                        </div>
+                        <div className='flex flex-col'>
+                            <p>Mobile Number</p>
+                            <div className='border p-2 rounded-xl'>
+                                <h2>{userData.address ? userData?.address : 'N/A'}</h2>
+                            </div>
+                        </div>
+                        <div className='flex flex-col'>
+                            <p>Email Address</p>
+                            <div>
+                            </div>
+                            <div className='border p-2 rounded-xl'>
+                                <h2>{userData ? userData?.email : 'kalidash'}</h2>
+                            </div>
+
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col p-5  items-center gap-3 w-40'>
@@ -116,13 +176,12 @@ const UserProfile = () => {
                                 }
                             </div>
                         </div>
-                        <form>
+                        <div>
                             <label>
                                 <input onChange={handleImageHosting} type="file" hidden />
                                 <div className='w-40 h-9 border flex flex-col bg-[#00bba6] text-white rounded-2xl justify-center items-center'>{uploading ? "Uploading.." : "Upload a Picture"}</div>
-                                {/* <div class="flex w-28 h-9 px-2 flex-col bg-indigo-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">Choose File</div> */}
                             </label>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
