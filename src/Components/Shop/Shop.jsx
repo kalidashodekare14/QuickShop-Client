@@ -2,11 +2,11 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./Shop.css";
 import Select from "react-select";
-import {useState} from "react";
-import {FaFilter, FaSearch} from "react-icons/fa";
-import {FaFilterCircleXmark} from "react-icons/fa6";
-import {Audio} from "react-loader-spinner";
-import {Link} from "react-router-dom";
+import { useState } from "react";
+import { FaFilter, FaSearch } from "react-icons/fa";
+import { FaFilterCircleXmark } from "react-icons/fa6";
+import { Audio } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import useData from "../../hooks/useData";
 
@@ -100,11 +100,10 @@ const Shop = () => {
   ) : (
     <div className="flex bg-[#f2f4f8] pt-10 relative">
       <div
-        className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${
-          isOpen
-            ? "translate-x-2 translate-y-16 p-3 border "
-            : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
+        className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${isOpen
+          ? "translate-x-2 translate-y-16 p-3 border "
+          : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
       >
         <div className="bg-white w-full  flex flex-col  justify-center">
           <div className="p-3 border-b">
@@ -197,8 +196,8 @@ const Shop = () => {
             <Select
               className=" w-full"
               options={[
-                {value: "lowToHigh", label: "Price: Low to High"},
-                {value: "highToLow", label: "Price: High to Low"},
+                { value: "lowToHigh", label: "Price: Low to High" },
+                { value: "highToLow", label: "Price: High to Low" },
               ]}
               isClearable
               placeholder="Select sort order"
@@ -224,15 +223,15 @@ const Shop = () => {
                   <p>${product.price}</p>
                 </div>
                 <div className="flex items-center gap-3 mt-5">
-                  
-                  <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
-                    Details
-                  </button>
+
                   <Link to={`/details/${product._id}`}>
-                  <button className="btn bg-[#00bba6] text-white rounded-md">
+                    <button className="btn border  border-[#00bba6] text-[#00bba6] rounded-md">
+                      Details
+                    </button>
+                  </Link>
+                  <button onClick={() => addItem({ ...product, id: product._id })} className="btn bg-[#00bba6] text-white rounded-md">
                     Add to Cart
                   </button>
-                  </Link>
                 </div>
               </div>
             ))}
