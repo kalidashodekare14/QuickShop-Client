@@ -46,7 +46,6 @@ const CartCheckout = () => {
         });
     }
 
-
     const handleCartPayment = () => {
         const paymentInfo = {
             amount: 1500,
@@ -60,10 +59,7 @@ const CartCheckout = () => {
                     window.location.replace(redirecUrl)
                 }
             })
-
-
     }
-
 
     return (
         <div>
