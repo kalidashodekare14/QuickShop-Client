@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useCart } from 'react-use-cart';
 import { FaDeleteLeft } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import useAxiosCommon from '../../hooks/useAxiosCommon';
 
 const CartCheckout = () => {
 
+    const axiosCommon = useAxiosCommon()
     const salesTexRate = 0.1
 
 
@@ -44,6 +46,20 @@ const CartCheckout = () => {
         });
     }
 
+    const handleCartPayment = () => {
+        const paymentInfo = {
+            amount: 1500,
+            currency: 'BDT'
+        }
+        axiosCommon.post('/create-payment', paymentInfo)
+            .then(res => {
+                console.log(res)
+                const redirecUrl = res.data.paymentUrl
+                if (redirecUrl) {
+                    window.location.replace(redirecUrl)
+                }
+            })
+    }
 
     return (
         <div>
@@ -118,7 +134,7 @@ const CartCheckout = () => {
                             </div>
                         </div>
                         <div className='flex justify-center items-center'>
-                            <button className='btn w-32'>Checkout</button>
+                            <button onClick={handleCartPayment} className='btn w-32'>Checkout</button>
                         </div>
 
                     </div>
