@@ -13,8 +13,8 @@ const Details = () => {
     return (
         <div className='mx-20 flex justify-center items-center min-h-screen gap-10'>
             <div className='w-[50%]'>
-               
-                <img className='w-[70%]' src={productDetails.image} alt="" />
+                <ImageZoom src={img} width={"100%"} alt="A image to apply the ImageZoom plugin" zoom="200" />
+                {/* <img className='w-[70%]' src={productDetails.image} alt="" /> */}
             </div>
             <div className='w-[50%] space-y-5'>
                 <h1 className='text-3xl'>T-Shart Reebok Zig Kinetica 3</h1>

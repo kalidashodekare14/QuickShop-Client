@@ -14,7 +14,7 @@ const UserProfile = () => {
     const { userData, userLoading, userRefetch } = useData()
     const [uploading, setUploading] = useState(false)
     const axiosCommon = useAxiosCommon()
-    const { user } = useAuth()
+    const { user, profileUpdateSystem, profileNameUpdateSystem } = useAuth()
     const [profileChange, setProfileChange] = useState(false)
 
     const {
@@ -56,17 +56,35 @@ const UserProfile = () => {
             const data = await res.json()
             if (data.success) {
                 console.log(data.data.url)
+
                 const uploadImage = {
                     image: data.data.url
                 }
                 axiosCommon.patch(`/user-image-update/${user?.email}`, uploadImage)
                     .then(res => {
                         console.log(res.data)
-                        userRefetch()
+                        if (res.data.modifiedCount > 0) {
+                            profileUpdateSystem(null, data.data.url)
+                                .then(res => {
+                                    console.log(res.data)
+                                    userRefetch()
+                                    userData.image = data.data.url
+                                })
+                                .catch(error => {
+                                    console.log(error.message)
+                                })
+
+                        }
+
+
                     })
                     .catch(error => {
                         console.log(error.message)
                     })
+
+
+
+
             }
         } catch (error) {
             console.log(error.message)
@@ -92,7 +110,18 @@ const UserProfile = () => {
         axiosCommon.patch(`/profile-update/${user?.email}`, userUpdateInfo)
             .then(res => {
                 console.log(res.data)
-                setProfileChange(false)
+                if (res.data.modifiedCount > 0) {
+                    profileNameUpdateSystem(data.name)
+                        .then(res => {
+                            console.log("name is Change")
+                            setProfileChange(false)
+                            userRefetch()
+                        })
+                        .catch(error => {
+                            console.log(error.message)
+                        })
+                }
+
             })
             .catch(error => {
                 console.log(error.message)
@@ -104,13 +133,13 @@ const UserProfile = () => {
     return (
         <div>
             <div className='h-60  border bg-[#f3f4f6] w-full'>
-                <div className='w-[60%]  m-auto mt-12'>
+                <div className='lg:w-[70%]  m-auto mt-12'>
                     <h1 className='text-2xl text-[#242e4c] font-bold'>Profile Info</h1>
                     <p className='text-[#848da0]'>Edit your name, avatar etc.</p>
                 </div>
             </div>
             <div className='-mt-32'>
-                <div className='flex flex-col lg:flex-row lg:w-[60%] m-auto bg-white border'>
+                <div className='flex flex-col lg:flex-row lg:w-[70%] m-auto bg-white border'>
                     <div className='relative w-[32]'>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className={`${profileChange && 'hidden'} absolute right-0 top-3`}>
@@ -119,7 +148,7 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-5 flex-1 px-5 pt-10 pb-5'>
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col '>
                                     <p>Your Name</p>
                                     <div>
                                         {

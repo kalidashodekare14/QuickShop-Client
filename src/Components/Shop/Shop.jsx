@@ -19,7 +19,7 @@ const Shop = () => {
   const [sortOrder, setSortOrder] = useState(null);
   const { allProducts, loading } = useData()
 
-  console.log(allProducts)
+  // console.log(allProducts)
   // cart add 
   const { addItem } = useCart();
 
