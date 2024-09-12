@@ -9,6 +9,9 @@ import FeaturedProduct from "../../Components/FeaturedProduct/FeaturedProduct";
 import Footer from "../../shared/Footer";
 
 const Home = () => {
+
+
+
   return (
     <div>
       <div className="lg:mx-10 mx-3 my-10">

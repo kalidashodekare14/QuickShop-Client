@@ -1,17 +1,12 @@
 import { useContext } from "react";
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
-import card from "../../assets/s1.png";
-import card1 from "../../assets/s2.png";
-import card2 from "../../assets/s3.png";
-import card3 from "../../assets/s4.png";
-import card5 from "../../assets/s6.png";
 import { dataContext } from "../../DataProvider/DataProvider";
+import { useCart } from "react-use-cart";
 
 const ReadyOrderBanner = () => {
   const { readyOrder } = useContext(dataContext);
+  const { addItem } = useCart()
 
   const responsive = {
     superLargeDesktop: {
@@ -65,7 +60,7 @@ const ReadyOrderBanner = () => {
               <button className="btn bg-[#00bba6] text-white rounded-md">
                 Buy Now
               </button>
-              <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">
+              <button onClick={() => addItem({ ...product, id: product._id })} className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">
                 Add to Cart
               </button>
             </div>
@@ -73,6 +68,7 @@ const ReadyOrderBanner = () => {
         ))}
       </Carousel>
     </div>
-  )};
+  )
+};
 
 export default ReadyOrderBanner;
