@@ -9,6 +9,9 @@ import CartCheckout from "../Components/CartCheckout/CartCheckout";
 import UserProfile from "../Components/UserProfile/UserProfile";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../Layout/Dashboard/Dashboard";
+import ManageUsers from "../pages/Dashboard/ManageUsers";
+import ManageProducts from "../pages/Dashboard/ManageProducts";
+import AddProduct from "../pages/Dashboard/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -56,8 +59,22 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
-    element: <Dashboard />
+    path: "dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "allUser",
+        element: <ManageUsers />,
+      },
+      {
+        path: "manageProducts",
+        element: <ManageProducts />,
+      },
+      {
+        path: "addProduct",
+        element: <AddProduct />,
+      },
+    ],
   },
 ]);
 
