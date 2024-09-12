@@ -122,15 +122,15 @@ const CartCheckout = () => {
                         <div className='mt-5'>
                             <div className='mb-5 flex justify-between items-center'>
                                 <h2>Subtotal :</h2>
-                                <h2>${cartTotal}</h2>
+                                <h2>${cartTotal.toFixed(2)}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
                                 <h2>Sales Tax :</h2>
-                                <h2>${salesTax}</h2>
+                                <h2>${salesTax.toFixed(2)}</h2>
                             </div>
                             <div className='mb-5 flex justify-between items-center'>
                                 <h2>Grand Total : </h2>
-                                <h2>${grandTotal}</h2>
+                                <h2>${grandTotal.toFixed(2)}</h2>
                             </div>
                         </div>
                         <div className='flex justify-center items-center'>

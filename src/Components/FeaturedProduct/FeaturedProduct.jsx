@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import card1 from "../../assets/s2.png";
 import { dataContext } from "../../DataProvider/DataProvider";
+import { useCart } from "react-use-cart";
 
 const FeaturedProduct = () => {
 
   const { featuredProduct } = useContext(dataContext)
+  const { addItem } = useCart()
 
   return (
     <div>
@@ -29,7 +31,7 @@ const FeaturedProduct = () => {
               </div>
               <div className="flex items-center gap-3 mt-5 mb-5">
                 <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>
-                <button className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
+                <button onClick={() => addItem({ ...product, id: product._id })} className="btn border  border-[#00bba6] bg-opacity-0 hover:bg-[#00bba6] hover:text-white duration-500 text-[#00bba6] rounded-md">Add to Cart</button>
               </div>
             </div>
           ))
