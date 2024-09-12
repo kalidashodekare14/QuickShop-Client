@@ -1,11 +1,25 @@
-import {Outlet} from "react-router-dom";
-import UseAdmin from "../../hooks/UseAdmin";
+import {Link, Outlet} from "react-router-dom";
+// import UseAdmin from "../../hooks/UseAdmin";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
+import useData from "../../hooks/useData";
+import {Audio} from "react-loader-spinner";
 
 const Dashboard = () => {
-  const [isAdmin] = UseAdmin();
-  console.log(isAdmin);
-  return (
+  const isAdmin = true;
+  const {loadingAllUser} = useData();
+  return loadingAllUser ? (
+    <div className="flex justify-center items-center md:mt-60">
+      <Audio
+        height="100"
+        width="100"
+        color="#00bba6"
+        ariaLabel="audio-loading"
+        wrapperStyle={{}}
+        wrapperClass="wrapper-class"
+        visible={true}
+      />
+    </div>
+  ) : (
     <div className="flex">
       {isAdmin ? (
         <div>
@@ -41,7 +55,7 @@ const Dashboard = () => {
                   />
                 </div>
 
-                <a
+                {/* <a
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -56,7 +70,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="mx-2 text-sm font-medium">Home</span>
-                </a>
+                </a> */}
 
                 <a
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
@@ -75,7 +89,8 @@ const Dashboard = () => {
                   <span className="mx-2 text-sm font-medium">Dashboard</span>
                 </a>
 
-                <a
+                <Link
+                  to="/dashboard/manageProducts"
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -89,10 +104,13 @@ const Dashboard = () => {
                     <path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
                   </svg>
 
-                  <span className="mx-2 text-sm font-medium">Projects</span>
-                </a>
+                  <span className="mx-2 text-sm font-medium">
+                    Manage Products
+                  </span>
+                </Link>
 
-                <a
+                <Link
+                  to="/dashboard/addProduct"
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -106,8 +124,8 @@ const Dashboard = () => {
                     <path d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
                   </svg>
 
-                  <span className="mx-2 text-sm font-medium">Tasks</span>
-                </a>
+                  <span className="mx-2 text-sm font-medium">Add Product</span>
+                </Link>
 
                 <a
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
@@ -127,7 +145,8 @@ const Dashboard = () => {
                   <span className="mx-2 text-sm font-medium">Reporting</span>
                 </a>
 
-                <a
+                <Link
+                  to="/dashboard/allUser"
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -142,7 +161,7 @@ const Dashboard = () => {
                   </svg>
 
                   <span className="mx-2 text-sm font-medium">Users</span>
-                </a>
+                </Link>
 
                 <a
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
@@ -215,7 +234,7 @@ const Dashboard = () => {
       ) : (
         <ErrorPage />
       )}
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full bg-[#FAF9F6]">
         <Outlet />
       </div>
     </div>
