@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Root from "../Layout/Root/Root";
 import Home from "../pages/Home/Home";
 import Shop from "../Components/Shop/Shop";
@@ -12,6 +12,7 @@ import Dashboard from "../Layout/Dashboard/Dashboard";
 import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProducts from "../pages/Dashboard/ManageProducts";
 import AddProduct from "../pages/Dashboard/AddProduct";
+import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       {
         path: "/details/:id",
         element: <Details></Details>,
-        loader: ({params}) =>
+        loader: ({ params }) =>
           fetch(`http://localhost:8000/details/${params.id}`),
       },
       {
@@ -59,21 +60,26 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: <Dashboard />,
     children: [
       {
-        path: "allUser",
+        path: "/dashboard/allUser",
         element: <ManageUsers />,
       },
       {
-        path: "manageProducts",
+        path: "/dashboard/manageProducts",
         element: <ManageProducts />,
       },
       {
-        path: "addProduct",
+        path: "/dashboard/addProduct",
         element: <AddProduct />,
       },
+      {
+        path: "/dashboard/updateProduct/:id",
+        element: <UpdateProduct></UpdateProduct>,
+        loader: ({params}) => fetch(`http://localhost:8000/details/${params.id}`)
+      }
     ],
   },
 ]);

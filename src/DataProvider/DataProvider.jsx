@@ -1,14 +1,14 @@
-import {createContext} from "react";
+import { createContext } from "react";
 import useAxiosCommon from "../hooks/useAxiosCommon";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 
 export const dataContext = createContext(null);
 
-const DataProvider = ({children}) => {
+const DataProvider = ({ children }) => {
   // const [isData, setIsData] = useState([])
   const axiosCommon = useAxiosCommon();
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   const {
     data: allProducts = [],
@@ -23,7 +23,7 @@ const DataProvider = ({children}) => {
   });
 
   // Ready Top Data Called
-  const {data: readyOrder = []} = useQuery({
+  const { data: readyOrder = [] } = useQuery({
     queryKey: ["readyOrder"],
     queryFn: async () => {
       const res = await axiosCommon.get("/allProducts");
@@ -32,7 +32,7 @@ const DataProvider = ({children}) => {
   });
 
   // Featured Data Called
-  const {data: featuredProduct = []} = useQuery({
+  const { data: featuredProduct = [] } = useQuery({
     queryKey: ["featuredProduct"],
     queryFn: async () => {
       const res = await axiosCommon.get("/allProducts");
