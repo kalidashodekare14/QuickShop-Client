@@ -1,7 +1,46 @@
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useData from "../../hooks/useData";
+import { Link } from "react-router-dom";
 
 const ManageProducts = () => {
-  const {allProducts} = useData();
+  const { allProducts, refetch } = useData();
+  const axiosSecure = useAxiosSecure()
+
+
+  const handleProductDelete = (product) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/product-delete/${product._id}`)
+          .then(res => {
+            console.log(res.data)
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Product has been deleted.",
+                icon: "success"
+              });
+              refetch()
+            }
+          })
+          .catch(error => {
+            console.log(error.message)
+          })
+
+      }
+    });
+
+
+
+  }
 
   return (
     <div>
@@ -121,7 +160,7 @@ const ManageProducts = () => {
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
-                            <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 hover:text-red-500 focus:outline-none">
+                            <button onClick={() => handleProductDelete(product)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 hover:text-red-500 focus:outline-none">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -133,17 +172,19 @@ const ManageProducts = () => {
                               </svg>
                             </button>
 
-                            <button className="text-gray-500 transition-colors duration-200 hover:text-yellow-500 focus:outline-none">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                className="w-5 h-5"
-                              >
-                                <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                              </svg>
-                            </button>
+                            <Link to={`/dashboard/updateProduct/${product._id}`}>
+                              <button className="text-gray-500 transition-colors duration-200 hover:text-yellow-500 focus:outline-none">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
+                                  <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                </svg>
+                              </button>
+                            </Link>
                           </div>
                         </td>
                       </tr>
