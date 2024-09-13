@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
@@ -12,7 +12,7 @@ const UpdateProduct = () => {
     const [imageUploading, setImageUploading] = useState(false)
     const [productImage, setProductImage] = useState("")
     const product = useLoaderData()
-    console.log(product)
+    const navigate = useNavigate()
 
     const {
         register,
@@ -58,22 +58,24 @@ const UpdateProduct = () => {
             brandName: data.brandName,
             image: productImage
         }
-        axiosSecure.post("/product-add", productInfo)
+        axiosSecure.patch(`/product-update/${product._id}`, productInfo)
             .then(res => {
                 console.log(res.data)
-                if (res.data.insertedId) {
+                if (res.data.modifiedCount > 0) {
                     Swal.fire({
-                        position: "top-end",
+                        position: "center",
                         icon: "success",
-                        title: "Your Product Add Successfuly",
+                        title: "Your Product has been Update",
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate("/dashboard/manageProducts")
                 }
             })
             .catch(error => {
                 console.log(error.message)
             })
+
 
     }
 
@@ -100,8 +102,9 @@ const UpdateProduct = () => {
                 <div className="bg-white py-9 px-6 md:w-1/2 rounded-md shadow-sm">
                     <h3 className="text-xl font-medium">Product Media</h3>
                     <p className="mt-3 text-lg">Upload Image</p>
-                    <fieldset className="flex w-full space-y-1 text-gray-100 dark:text-gray-800">
-                        <div onClick={() => document.querySelector('input[type="file"]').click()} className="flex px-8 py-12 border-2 border-dashed rounded-md border-gray-700 dark:border-gray-300 text-gray-400 dark:text-gray-600 bg-gray-800 dark:bg-gray-100">
+                    <fieldset className="flex justify-center items-center w-full  text-gray-100 dark:text-gray-800 border-2 border-dashed rounded-md border-gray-700 dark:border-gray-300 text-gray-40 bg-gray-800 dark:bg-gray-100">
+                        <div onClick={() => document.querySelector('input[type="file"]').click()} className="flex flex-col  justify-center items-center space-y-5 px-8 py-12 ">
+                            <img src={product.image} alt="" />
                             <input
                                 onChange={handleImageHosting}
                                 type="file"
@@ -109,9 +112,7 @@ const UpdateProduct = () => {
                             />
                             <div className='w-40 h-9 border flex flex-col bg-[#00bba6] text-white rounded-2xl justify-center items-center'>{imageUploading ? "Uploading.." : "Upload a Picture"}</div>
                         </div>
-                        <div>
-                            <img src={product.image} alt="" />
-                        </div>
+
                     </fieldset>
                 </div>
             </div>
