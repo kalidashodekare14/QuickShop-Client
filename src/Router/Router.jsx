@@ -13,12 +13,14 @@ import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProducts from "../pages/Dashboard/ManageProducts";
 import AddProduct from "../pages/Dashboard/AddProduct";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -63,6 +65,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/dashboard/allUser",
@@ -79,7 +82,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/updateProduct/:id",
         element: <UpdateProduct></UpdateProduct>,
-        loader: ({params}) => fetch(`http://localhost:8000/details/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:8000/details/${params.id}`)
       }
     ],
   },

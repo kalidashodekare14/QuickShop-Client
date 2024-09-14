@@ -3,11 +3,28 @@ import { Link, Outlet } from "react-router-dom";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import { Audio } from "react-loader-spinner";
 import useAllUsers from "../../hooks/useAllUsers";
+import UseAdmin from "../../hooks/UseAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin, adminLoading] = UseAdmin()
   const [allUser, loadingAllUser] = useAllUsers()
-  console.log(loadingAllUser)
+
+
+  if (adminLoading) {
+    return <div className="flex justify-center items-center md:mt-60">
+      <Audio
+        height="100"
+        width="100"
+        color="#00bba6"
+        ariaLabel="audio-loading"
+        wrapperStyle={{}}
+        wrapperClass="wrapper-class"
+        visible={true}
+      />
+    </div>
+  }
+
+
   return loadingAllUser ? (
     <div className="flex justify-center items-center md:mt-60">
       <Audio
