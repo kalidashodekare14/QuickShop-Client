@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState} from "react";
+import { createContext, useEffect, useState } from "react";
 export const authContext = createContext(null);
 import {
   createUserWithEmailAndPassword,
@@ -8,10 +8,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../Firebase.config";
+import useAxiosCommon from "../hooks/useAxiosCommon";
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
+  const axiosCommon = useAxiosCommon()
 
   const signUpSystem = (email, password) => {
     setLoading(true);
@@ -42,12 +44,25 @@ const AuthProvider = ({children}) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log(currentUser);
+      if (currentUser) {
+        // get token and store client
+        const userInfo = { email: currentUser.email }
+        axiosCommon.post("/jwt", userInfo)
+          .then(res => {
+            if (res.data.token) {
+              localStorage.setItem("access-token", res.data.token);
+            }
+          })
+      } else {
+        // remove token
+        localStorage.removeItem("access-token")
+      }
       setLoading(false);
     });
     return () => {
       unSubscribe();
     };
-  }, [user]);
+  }, [user, axiosCommon]);
 
   const authInfo = {
     user,

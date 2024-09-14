@@ -146,6 +146,9 @@ const Navbar = () => {
                 </Link>
               </div>
             }
+            <Link to={"/dashboard/allUser"}>
+              Dashboard
+            </Link>
           </div>
 
         </div>

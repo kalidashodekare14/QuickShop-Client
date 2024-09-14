@@ -1,7 +1,8 @@
-import useData from "../../hooks/useData";
+import useAllUsers from "../../hooks/useAllUsers";
 
 const ManageUsers = () => {
-  const { allUser } = useData();
+
+  const [allUser] = useAllUsers()
 
   return (
     <div>

@@ -7,6 +7,7 @@ import {MdOutlineDeviceHub} from "react-icons/md";
 import {SiCapacitor} from "react-icons/si";
 
 const Categories = () => {
+
   return (
     <div>
       <div className="text-center space-y-2 my-10">
