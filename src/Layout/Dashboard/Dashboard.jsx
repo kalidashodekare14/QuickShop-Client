@@ -1,12 +1,13 @@
-import {Link, Outlet} from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 // import UseAdmin from "../../hooks/UseAdmin";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
-import useData from "../../hooks/useData";
-import {Audio} from "react-loader-spinner";
+import { Audio } from "react-loader-spinner";
+import useAllUsers from "../../hooks/useAllUsers";
 
 const Dashboard = () => {
   const isAdmin = true;
-  const {loadingAllUser} = useData();
+  const [allUser, loadingAllUser] = useAllUsers()
+  console.log(loadingAllUser)
   return loadingAllUser ? (
     <div className="flex justify-center items-center md:mt-60">
       <Audio
@@ -29,7 +30,7 @@ const Dashboard = () => {
                 className="w-auto h-7"
                 src="https://merakiui.com/images/logo.svg"
                 alt=""
-              />  
+              />
             </a>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
@@ -230,6 +231,7 @@ const Dashboard = () => {
               </div>
             </div>
           </aside>
+          <Link to={"/"}>Home</Link>
         </div>
       ) : (
         <ErrorPage />

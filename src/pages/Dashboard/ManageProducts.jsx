@@ -1,10 +1,10 @@
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useData from "../../hooks/useData";
 import { Link } from "react-router-dom";
+import useAllProducts from "../../hooks/useAllProducts";
 
 const ManageProducts = () => {
-  const { allProducts, refetch } = useData();
+  const [allProducts, refetch] = useAllProducts()
   const axiosSecure = useAxiosSecure()
 
 

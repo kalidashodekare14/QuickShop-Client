@@ -8,7 +8,7 @@ import { FaFilterCircleXmark } from "react-icons/fa6";
 import { Audio } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
-import useData from "../../hooks/useData";
+import useAllProducts from "../../hooks/useAllProducts";
 
 const Shop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,10 @@ const Shop = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
-  const { allProducts, loading } = useData()
+  const [allProducts, loading] = useAllProducts()
+
+
+
 
   // console.log(allProducts)
   // cart add 

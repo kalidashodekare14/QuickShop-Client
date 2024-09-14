@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
-import useData from '../../hooks/useData';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
 import useAxiosCommon from '../../hooks/useAxiosCommon';
 import { RotatingLines } from 'react-loader-spinner';
 import { FaRegEdit } from "react-icons/fa";
+import { useQuery } from '@tanstack/react-query';
 const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const UserProfile = () => {
 
-    const { userData, userLoading, userRefetch } = useData()
     const [uploading, setUploading] = useState(false)
     const axiosCommon = useAxiosCommon()
     const { user, profileUpdateSystem, profileNameUpdateSystem } = useAuth()
     const [profileChange, setProfileChange] = useState(false)
+
+
+    const {
+        data: userData = [], isLoading: userLoading, refetch
+    } = useQuery({
+        queryKey: ["userData", user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user-profile/${user?.email}`);
+            return res.data[0];
+        },
+    });
+
+
+
 
     const {
         register,
@@ -67,7 +79,7 @@ const UserProfile = () => {
                             profileUpdateSystem(null, data.data.url)
                                 .then(res => {
                                     console.log(res.data)
-                                    userRefetch()
+                                    refetch()
                                     userData.image = data.data.url
                                 })
                                 .catch(error => {
@@ -115,7 +127,7 @@ const UserProfile = () => {
                         .then(res => {
                             console.log("name is Change")
                             setProfileChange(false)
-                            userRefetch()
+                            refetch()
                         })
                         .catch(error => {
                             console.log(error.message)

@@ -1,12 +1,22 @@
-import { useContext } from "react";
-import card1 from "../../assets/s2.png";
-import { dataContext } from "../../DataProvider/DataProvider";
 import { useCart } from "react-use-cart";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const FeaturedProduct = () => {
 
-  const { featuredProduct } = useContext(dataContext)
+  // const { featuredProduct } = useContext(dataContext)
   const { addItem } = useCart()
+  const axiosCommon = useAxiosCommon()
+
+
+  const { data: featuredProduct = [] } = useQuery({
+    queryKey: ["featuredProduct"],
+    queryFn: async () => {
+      const res = await axiosCommon.get("/allProducts");
+      return res.data;
+    },
+  });
+
 
   return (
     <div>

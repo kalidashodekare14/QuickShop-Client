@@ -1,12 +1,23 @@
-import { useContext } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { dataContext } from "../../DataProvider/DataProvider";
 import { useCart } from "react-use-cart";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const ReadyOrderBanner = () => {
-  const { readyOrder } = useContext(dataContext);
+  // const { readyOrder } = useContext(dataContext);
   const { addItem } = useCart()
+  const axiosCommon = useAxiosCommon()
+
+
+  const { data: readyOrder = [] } = useQuery({
+    queryKey: ["readyOrder"],
+    queryFn: async () => {
+      const res = await axiosCommon.get("/allProducts");
+      return res.data;
+    },
+  });
+
 
   const responsive = {
     superLargeDesktop: {
