@@ -7,11 +7,12 @@ import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import useAxiosCommon from '../../hooks/useAxiosCommon';
 
 const SignUp = () => {
 
     const { signUpSystem } = useAuth()
-    const axiosSecure = useAxiosSecure()
+    const axioscommon = useAxiosCommon()
     const navigate = useNavigate()
 
     const {
@@ -29,7 +30,7 @@ const SignUp = () => {
                     password: data.password
                 }
                 console.log(userInfo)
-                axiosSecure.post('/all-users', userInfo)
+                axioscommon.post('/all-users', userInfo)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.insertedId) {
