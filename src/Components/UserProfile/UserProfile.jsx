@@ -5,6 +5,7 @@ import useAxiosCommon from '../../hooks/useAxiosCommon';
 import { RotatingLines } from 'react-loader-spinner';
 import { FaRegEdit } from "react-icons/fa";
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 const image_hosting_key = import.meta.env.VITE_IMG_API_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
@@ -12,22 +13,23 @@ const UserProfile = () => {
 
     const [uploading, setUploading] = useState(false)
     const axiosCommon = useAxiosCommon()
+    const axiosSecure = useAxiosSecure()
     const { user, profileUpdateSystem, profileNameUpdateSystem } = useAuth()
     const [profileChange, setProfileChange] = useState(false)
 
 
     const {
-        data: userData = [], isLoading: userLoading, refetch
-    } = useQuery({
-        queryKey: ["userData", user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/user-profile/${user?.email}`);
-            return res.data[0];
-        },
-    });
+        data: userData = [], isLoading: userLoading, refetch } = useQuery({
+            queryKey: ["userData", user?.email],
+            queryFn: async () => {
+                const res = await axiosSecure.get(`/user-profile/${user?.email}`);
+                return res.data[0];
+            },
+        });
 
 
 
+        console.log(userData)
 
     const {
         register,

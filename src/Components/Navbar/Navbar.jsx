@@ -4,10 +4,12 @@ import { FaCartPlus } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import useAuth from "../../hooks/useAuth";
+import UseAdmin from "../../hooks/UseAdmin";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOutSystem } = useAuth()
+  const [isAdmin] = UseAdmin()
 
   const {
     isEmpty,
@@ -130,13 +132,18 @@ const Navbar = () => {
                     tabIndex={0}
                     className="menu menu-sm dropdown-content bg-[#00bba6] text-white font-medium  z-[1] w-52  shadow">
                     <li>
-                      <Link to={"/profile"}>
-                        <p className="justify-between">
-                          Profile
-                        </p>
-                      </Link>
+                      {isAdmin ? (
+                        <Link to={"/dashboard"}>
+                          <p>Dashboard</p>
+                        </Link>
+                      ) : (
+                        <Link to={"/profile"}>
+                          <p className="justify-between">
+                            Profile
+                          </p>
+                        </Link>
+                      )}
                     </li>
-                    <li><p>Settings</p></li>
                     <li><p onClick={handleLogoutSystem}>Logout</p></li>
                   </ul>
                 </div>
@@ -146,14 +153,11 @@ const Navbar = () => {
                 </Link>
               </div>
             }
-            <Link to={"/dashboard/allUser"}>
-              Dashboard
-            </Link>
           </div>
 
         </div>
-      </div>
-    </nav>
+      </div >
+    </nav >
   );
 };
 

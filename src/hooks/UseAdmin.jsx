@@ -11,15 +11,21 @@ const UseAdmin = () => {
     queryKey: [user?.email, "isAdmin"],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
-      if (!user?.email) {
+      try {
+        if (!user?.email) {
+          return false
+        }
+        const res = await axiosSecure.get(`/user/admin/${user?.email}`);
+        console.log(res.data)
+        return res.data.admin
+      } catch (error) {
+        console.log('error fatching admin data:', error)
         return false
       }
-      const res = await axiosSecure.get(`/user/admin/${user?.email}`);
-      console.log(res.data)
-      return res.data.admin
     }
 
   })
+  
   return [isAdmin, adminLoading]
 };
 

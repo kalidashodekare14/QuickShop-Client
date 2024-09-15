@@ -7,13 +7,14 @@ import Login from "../Components/Login/Login";
 import Details from "../Components/Details/Details";
 import CartCheckout from "../Components/CartCheckout/CartCheckout";
 import UserProfile from "../Components/UserProfile/UserProfile";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProducts from "../pages/Dashboard/ManageProducts";
 import AddProduct from "../pages/Dashboard/AddProduct";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import AdminRoute from "../Routes/PrivateRoute/AdminRoute/AdminRoute";
+import PrivateRoute from "../Routes/PrivateRoute/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -77,11 +78,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/addProduct",
-        element: <AddProduct />,
+        element: <AddProduct />
       },
       {
         path: "/dashboard/updateProduct/:id",
-        element: <UpdateProduct></UpdateProduct>,
+        element: <AdminRoute><UpdateProduct></UpdateProduct></AdminRoute>,
         loader: ({ params }) => fetch(`http://localhost:8000/details/${params.id}`)
       }
     ],
