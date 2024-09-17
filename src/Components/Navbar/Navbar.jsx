@@ -5,11 +5,14 @@ import { Link, NavLink } from "react-router-dom";
 import { useCart } from "react-use-cart";
 import useAuth from "../../hooks/useAuth";
 import UseAdmin from "../../hooks/UseAdmin";
+import useUserProfile from "../../hooks/useUserProfile";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOutSystem } = useAuth()
   const [isAdmin] = UseAdmin()
+  const [userData] = useUserProfile()
 
   const {
     isEmpty,
@@ -123,9 +126,16 @@ const Navbar = () => {
                 <div className=" dropdown dropdown-end">
                   <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full">
-                      <img
-                        alt="Tailwind CSS Navbar component"
-                        src={user?.photoURL} />
+                      {
+                        userData.image ? (
+                          <img
+                            alt="Tailwind CSS Navbar component"
+                            src={userData.image} />
+                        ) : (
+                          <FaUserCircle className="text-4xl border rounded-full" />
+                        )
+                      }
+
                     </div>
                   </div>
                   <ul
