@@ -3,9 +3,12 @@ import { useCart } from 'react-use-cart';
 import { FaDeleteLeft } from "react-icons/fa6";
 import Swal from 'sweetalert2';
 import useAxiosCommon from '../../hooks/useAxiosCommon';
+import useUserProfile from '../../hooks/useUserProfile';
 
 const CartCheckout = () => {
 
+
+    const [userData, userLoading, refetch] = useUserProfile()
     const axiosCommon = useAxiosCommon()
     const salesTexRate = 0.1
 
@@ -46,9 +49,22 @@ const CartCheckout = () => {
         });
     }
 
+
+
     const handleCartPayment = () => {
+
+        const products = items.map(product => ({
+            product_name: product.name,
+            brand_name: product.brandName,
+            category: product.category
+        }))
+
         const paymentInfo = {
-            amount: 1500,
+            customar_name: userData.name,
+            customar_email: userData.email,
+            customar_address: userData.address,
+            products,
+            amount: grandTotal,
             currency: 'BDT'
         }
         axiosCommon.post('/create-payment', paymentInfo)
@@ -88,7 +104,7 @@ const CartCheckout = () => {
                                             <td>
                                                 <img className='w-32' src={cart.image} alt="" />
                                             </td>
-                                            <td>Quality Control Specialist</td>
+                                            <td>{cart.name}</td>
                                             <td>${cart.price}</td>
                                             <td>
                                                 <div className='flex items-center'>

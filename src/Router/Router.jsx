@@ -15,6 +15,9 @@ import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AdminRoute from "../Routes/PrivateRoute/AdminRoute/AdminRoute";
 import PrivateRoute from "../Routes/PrivateRoute/PrivateRoute";
+import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess";
+import PaymentFail from "../Components/PaymentFail/PaymentFail";
+import PaymentCancel from "../Components/PaymentCancel/PaymentCancel";
 
 
 const router = createBrowserRouter([
@@ -54,6 +57,18 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: '/payment-success',
+        element: <PaymentSuccess />
+      },
+      {
+        path: '/payment-fail',
+        element: <PaymentFail />
+      },
+      {
+        path: '/payment-cancel',
+        element: <PaymentCancel />
+      },
+      {
         path: "/profile",
         element: (
           <PrivateRoute>
@@ -84,7 +99,7 @@ const router = createBrowserRouter([
         path: "/dashboard/updateProduct/:id",
         element: <AdminRoute><UpdateProduct></UpdateProduct></AdminRoute>,
         loader: ({ params }) => fetch(`http://localhost:8000/details/${params.id}`)
-      }
+      },
     ],
   },
 ]);
