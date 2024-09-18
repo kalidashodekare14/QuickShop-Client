@@ -18,6 +18,8 @@ import PrivateRoute from "../Routes/PrivateRoute/PrivateRoute";
 import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess";
 import PaymentFail from "../Components/PaymentFail/PaymentFail";
 import PaymentCancel from "../Components/PaymentCancel/PaymentCancel";
+import OrderHistory from "../pages/Dashboard/OrderHistory";
+import OrderItems from "../pages/Dashboard/OrderItems";
 
 
 const router = createBrowserRouter([
@@ -100,6 +102,15 @@ const router = createBrowserRouter([
         element: <AdminRoute><UpdateProduct></UpdateProduct></AdminRoute>,
         loader: ({ params }) => fetch(`http://localhost:8000/details/${params.id}`)
       },
+      {
+        path: '/dashboard/order-history',
+        element: <OrderHistory></OrderHistory>
+      },
+      {
+        path: '/dashboard/order-items/:id',
+        element: <OrderItems></OrderItems>,
+        loader: ({ params }) => fetch(`http://localhost:8000/order-items/${params.id}`)
+      }
     ],
   },
 ]);
