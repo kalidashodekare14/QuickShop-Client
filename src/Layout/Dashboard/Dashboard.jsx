@@ -145,7 +145,7 @@ const Dashboard = () => {
                   <span className="mx-2 text-sm font-medium">Add Product</span>
                 </Link>
 
-                <a
+                <Link to={"/dashboard/order-history"}
                   className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -160,8 +160,8 @@ const Dashboard = () => {
                     <path d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
                   </svg>
 
-                  <span className="mx-2 text-sm font-medium">Reporting</span>
-                </a>
+                  <span className="mx-2 text-sm font-medium">Order History</span>
+                </Link>
 
                 <Link
                   to="/dashboard/allUser"

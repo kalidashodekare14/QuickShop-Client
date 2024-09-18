@@ -7,11 +7,9 @@ import useUserProfile from '../../hooks/useUserProfile';
 
 const CartCheckout = () => {
 
-
     const [userData, userLoading, refetch] = useUserProfile()
     const axiosCommon = useAxiosCommon()
     const salesTexRate = 0.1
-
 
     const {
         isEmpty,
@@ -49,14 +47,14 @@ const CartCheckout = () => {
         });
     }
 
-
-
     const handleCartPayment = () => {
 
         const products = items.map(product => ({
             product_name: product.name,
             brand_name: product.brandName,
-            category: product.category
+            category: product.category,
+            image: product.image,
+            quantity: product.quantity
         }))
 
         const paymentInfo = {
@@ -80,7 +78,7 @@ const CartCheckout = () => {
     return (
         <div>
             <div>
-                <h1 className='text-center my-20 text-4xl'>Shopping Cart</h1>
+                <h1 className='text-center my-10 text-4xl'>Shopping Cart</h1>
             </div>
             <div className='flex justify-between mx-20 space-x-20'>
                 <div className='w-full'>
