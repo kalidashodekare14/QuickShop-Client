@@ -5,22 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { IoMdCopy } from 'react-icons/io';
 import { SiGooglemessages } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import useOrderHistory from '../../hooks/useOrderHistory';
 
 const OrderHistory = () => {
 
-    const axiosSecure = useAxiosSecure()
-
-    const { data: userData = [], isLoading: userLoading, refetch } = useQuery({
-        queryKey: ["userData"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/order-history`);
-            return res.data;
-        },
-    });
-
-
-    console.log(userData)
-
+    const [userOrderHistory, userLoading, refetch] = useOrderHistory()
 
     return (
         <div>
@@ -72,23 +61,17 @@ const OrderHistory = () => {
                                 <tbody>
                                     {/* row 1 */}
                                     {
-                                        userData.map(order => (
+                                        userOrderHistory.map(order => (
                                             <tr>
                                                 <th>{order.paymentId}</th>
-                                                <td>{order.date ? order.date : 'N/A'}</td>
+                                                <td>{order.date ? new Date(order.date).toLocaleDateString() : 'N/A'}</td>
                                                 <td>{order.customar_name}</td>
                                                 <td>
-                                                    {
-                                                        order.status ? (
-                                                            <h2 className='border px-3 text-[#08b047] border-[#08b047] rounded-xl'>
-                                                                ● Success
-                                                            </h2>
-                                                        ) : (
-                                                            <h2 className='border px-3 text-red-500 border-red-500 rounded-xl'>
-                                                                ● Pending
-                                                            </h2>
-                                                        )
-                                                    }
+                                                    <div className={`${order.status === 'Success' && 'text-green-500 p-2 rounded-xl border border-green-500 ' || order.status === 'Pending' && ' text-red-500 p-2 rounded-xl border border-red-500 '}`}>
+                                                        {
+                                                            order.status
+                                                        }
+                                                    </div>
                                                 </td>
                                                 <td>${order.amount}</td>
                                                 <td>{order.delivery ? order.delivery : 'N/A'}</td>

@@ -20,6 +20,9 @@ import PaymentFail from "../Components/PaymentFail/PaymentFail";
 import PaymentCancel from "../Components/PaymentCancel/PaymentCancel";
 import OrderHistory from "../pages/Dashboard/OrderHistory";
 import OrderItems from "../pages/Dashboard/OrderItems";
+import PaymentProtectedRoute from "../Routes/PaymentProtectedRoute/PaymentProtectedRoute";
+import UserOrderHistory from "../Components/UserOrderHistory/UserOrderHistory";
+import DashboardOverview from "../pages/Dashboard/DashboardOverview";
 
 
 const router = createBrowserRouter([
@@ -78,6 +81,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: '/order-history',
+        element: <UserOrderHistory></UserOrderHistory>
+      }
     ],
   },
   {
@@ -85,6 +92,10 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
+      {
+        path: '/dashboard/overview',
+        element: <DashboardOverview></DashboardOverview>
+      },
       {
         path: "/dashboard/allUser",
         element: <ManageUsers />,
