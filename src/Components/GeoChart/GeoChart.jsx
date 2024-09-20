@@ -3,15 +3,13 @@ import { Chart } from "react-google-charts";
 
 export const data = [
     ["Country", "Popularity"],
-    ["Germany", 200],
-    ["United States", 300],
-    ["Brazil", 400],
+    ["india", 500],
     ["Canada", 500],
-    ["France", 600],
-    ["RU", 700],
+    ["bangladesh", 500],
+
 ];
 
-const GeoChart = () => {
+const GeoChart = ({ chartData }) => {
     return (
         <div className="className='w-full h-80'">
             <Chart
@@ -31,7 +29,7 @@ const GeoChart = () => {
                 width="100%"
                 // height="400px"
                 className="h-[336px]"
-                data={data}
+                data={chartData}
             />
         </div>
     );

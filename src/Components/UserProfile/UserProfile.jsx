@@ -109,7 +109,11 @@ const UserProfile = () => {
         const userUpdateInfo = {
             name: data.name,
             address: data.address,
-            mobileNumber: data.mobileNumber
+            mobileNumber: data.mobileNumber,
+            city: data.city,
+            state: data.state,
+            postal_code: data.postalCode,
+            country: data.country
         }
         axiosCommon.patch(`/profile-update/${user?.email}`, userUpdateInfo)
             .then(res => {
@@ -212,6 +216,75 @@ const UserProfile = () => {
                                         <h2>{userData.email ? userData?.email : 'N/A'}</h2>
                                     </div>
                                 </div>
+                                <div className='flex flex-col'>
+                                    <p>City</p>
+                                    <div>
+                                        {
+                                            !profileChange ? (
+                                                <div className='border border-[#00bba6] p-3 rounded-xl'>
+                                                    <h2>{userData.city ? userData?.city : 'N/A'}</h2>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <input {...register("city")} defaultValue={userData?.city} className='input input-bordered' type="name" />
+                                                </div>
+                                            )
+                                        }
+
+                                    </div>
+                                </div>
+                                <div className='flex flex-col'>
+                                    <p>State</p>
+                                    <div>
+                                        {
+                                            !profileChange ? (
+                                                <div className='border border-[#00bba6] p-3 rounded-xl'>
+                                                    <h2>{userData.state ? userData?.state : 'N/A'}</h2>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <input {...register("state")} defaultValue={userData?.state} className='input input-bordered' type="name" />
+                                                </div>
+                                            )
+                                        }
+
+                                    </div>
+                                </div>
+                                <div className='flex flex-col'>
+                                    <p>Postal Code</p>
+                                    <div>
+                                        {
+                                            !profileChange ? (
+                                                <div className='border border-[#00bba6] p-3 rounded-xl'>
+                                                    <h2>{userData.postal_code ? userData?.postal_code : 'N/A'}</h2>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <input {...register("postalCode")} defaultValue={userData?.postal_code} className='input input-bordered' type="name" />
+                                                </div>
+                                            )
+                                        }
+
+                                    </div>
+                                </div>
+                                <div className='flex flex-col'>
+                                    <p>Country</p>
+                                    <div>
+                                        {
+                                            !profileChange ? (
+                                                <div className='border border-[#00bba6] p-3 rounded-xl'>
+                                                    <h2>{userData.country ? userData?.country : 'N/A'}</h2>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <input {...register("country")} defaultValue={userData?.country} className='input input-bordered' type="name" />
+                                                </div>
+                                            )
+                                        }
+
+                                    </div>
+                                </div>
+
                             </div>
                             {
                                 profileChange && (

@@ -27,6 +27,9 @@ const DashboardOverview = () => {
 
 
     console.log(overviewData)
+    const countryData = overviewData?.totalCountry?.last24Hours.map(country => [country._id, country.totalCustomers]) || []
+    const chartData = [["Country", "Popularity"], ...countryData]
+
 
     return (
         <div className=''>
@@ -118,39 +121,23 @@ const DashboardOverview = () => {
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
-                                        <GeoChart></GeoChart>
+                                        <GeoChart chartData={chartData}></GeoChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
-                                        <div className='p-2'>
-                                            <div className='flex items-center'>
-                                                <img className='w-10' src={bd} alt="" />
-                                                <h1>Bangladesh</h1>
-                                            </div>
-                                            <div className='flex items-center gap-1'>
-                                                <input value={'90'} type="range" />
-                                                <span>50%</span>
-                                            </div>
-                                        </div>
-                                        <div className='p-2'>
-                                            <div className='flex items-center'>
-                                                <img className='w-10' src={ind} alt="" />
-                                                <h1>India</h1>
-                                            </div>
-                                            <div className='flex items-center gap-1'>
-                                                <input value={'60'} type="range" />
-                                                <span>50%</span>
-                                            </div>
-                                        </div>
-                                        <div className='p-2'>
-                                            <div className='flex items-center'>
-                                                <img className='w-10' src={ca} alt="" />
-                                                <h1>Bangladesh</h1>
-                                            </div>
-                                            <div className='flex items-center gap-1'>
-                                                <input value={'30'} type="range" />
-                                                <span>50%</span>
-                                            </div>
-                                        </div>
+                                        {
+                                            overviewData?.totalCountry?.last24Hours.map(range => (
+                                                <div className='p-2'>
+                                                    <div className='flex items-center'>
+                                                        {/* <img className='w-10' src={bd} alt="" /> */}
+                                                        <h1>{range._id}</h1>
+                                                    </div>
+                                                    <div className='flex items-center gap-1'>
+                                                        <input value={'90'} type="range" />
+                                                        <span>{range.totalCustomers}%</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>
