@@ -143,7 +143,7 @@ const Navbar = () => {
                     className="menu menu-sm dropdown-content bg-[#00bba6] text-white font-medium  z-[1] w-52  shadow">
                     <li>
                       {isAdmin ? (
-                        <Link to={"/dashboard"}>
+                        <Link to={"/dashboard/overview"}>
                           <p>Dashboard</p>
                         </Link>
                       ) : (
@@ -153,6 +153,15 @@ const Navbar = () => {
                           </p>
                         </Link>
                       )}
+                    </li>
+                    <li>
+                      {
+                        !isAdmin && <Link to={'/order-history'}>
+                          <p className="justify-between">
+                            Order History
+                          </p>
+                        </Link>
+                      }
                     </li>
                     <li><p onClick={handleLogoutSystem}>Logout</p></li>
                   </ul>
