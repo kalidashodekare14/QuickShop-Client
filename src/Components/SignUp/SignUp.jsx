@@ -33,7 +33,7 @@ const SignUp = () => {
                 axioscommon.post('/all-users', userInfo)
                     .then(res => {
                         console.log(res.data)
-                        if (res.data.insertedId) {
+                        if (res.data.result.insertedId) {
                             Swal.fire({
                                 position: "center",
                                 icon: "success",

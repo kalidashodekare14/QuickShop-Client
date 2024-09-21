@@ -61,6 +61,7 @@ const CartCheckout = () => {
             customar_name: userData.name,
             customar_email: userData.email,
             customar_address: userData.address,
+            image: userData.image,
             products,
             amount: grandTotal,
             currency: 'BDT'
