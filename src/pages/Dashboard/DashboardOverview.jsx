@@ -5,12 +5,15 @@ import 'react-tabs/style/react-tabs.css';
 import { TbMoneybag } from "react-icons/tb";
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import RechartDashboard from '../../Components/RechartDashboard/RechartDashboard';
-import GeoChart from '../../Components/GeoChart/GeoChart';
+import GeoChart from '../../Components/GeoChart/Geo24HorseChart';
 import bd from '../../assets/bangladesh.png'
 import ind from '../../assets/india.png'
 import ca from '../../assets/canada.png'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import GeoWeekChart from '../../Components/GeoChart/GeoWeekChart';
+import GeoMonthChart from '../../Components/GeoChart/GeoMonthChart';
+import GeoYearChart from '../../Components/GeoChart/GeoYearChart';
 
 const DashboardOverview = () => {
 
@@ -27,9 +30,35 @@ const DashboardOverview = () => {
 
 
     console.log(overviewData)
-    const countryData = overviewData?.totalCountry?.last24Hours.map(country => [country._id, country.totalCustomers]) || []
-    const chartData = [["Country", "Popularity"], ...countryData]
+    // country customar
+    const country24HourseData = overviewData?.totalCountry?.last24Hours.map(country => [country._id, country.totalCustomers]) || []
+    const chart24HourseData = [["Country", "Popularity"], ...country24HourseData]
 
+    const countryWeekData = overviewData?.totalCountry?.lastWeek.map(country => [country._id, country.totalCustomers]) || []
+    const chartWeekData = [["Country", "Popularity"], ...countryWeekData]
+
+    const countryMonthData = overviewData?.totalCountry?.lastMonth.map(country => [country._id, country.totalCustomers]) || []
+    const chartMonthData = [["Country", "Popularity"], ...countryMonthData]
+
+    const countryYearData = overviewData?.totalCountry?.lastYear.map(country => [country._id, country.totalCustomers]) || []
+    const chartYearData = [["Country", "Popularity"], ...countryYearData]
+
+
+
+    const getDayName = (dayNumber) => {
+        const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat']
+        return days[dayNumber - 1]
+    }
+
+    // week revenue
+    const weekData = overviewData?.totalWeekRevenue?.revenueData.map(item => (
+        {
+            name: getDayName(item._id),
+            pv: item.totalRevenue
+        }
+    ))
+
+    console.log(weekData)
 
     return (
         <div className=''>
@@ -117,16 +146,16 @@ const DashboardOverview = () => {
                             </div>
                             <div className='flex items-center gap-5 w-full'>
                                 <div className='w-[50%] border bg-white p-3'>
-                                    <RechartDashboard></RechartDashboard>
+                                    <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
-                                        <GeoChart chartData={chartData}></GeoChart>
+                                        <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
                                         {
                                             overviewData?.totalCountry?.last24Hours.map(range => (
-                                                <div className='p-2'>
+                                                <div key={range._id} className='p-2'>
                                                     <div className='flex items-center'>
                                                         {/* <img className='w-10' src={bd} alt="" /> */}
                                                         <h1>{range._id}</h1>
@@ -144,7 +173,211 @@ const DashboardOverview = () => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <h2>Any content 2</h2>
+                        <div className='my-10'>
+                            <div className='my-10 flex justify-between space-x-5'>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Revennue</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastWeek}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaUsers className='text-2xl text-[#fca3a7] p-1' />
+
+                                        </span>
+                                        <p className='text-[17px]'>Total Customar</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastWeek}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Transaction</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastWeek}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Product</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastWeek}</h1>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-5 w-full'>
+                                <div className='w-[50%] border bg-white p-3'>
+                                    <RechartDashboard weekData={weekData}></RechartDashboard>
+                                </div>
+                                <div className='flex border w-[50%]'>
+                                    <div className='w-[65%] bg-white p-1'>
+                                        <GeoWeekChart chartWeekData={chartWeekData}></GeoWeekChart>
+                                    </div>
+                                    <div className='space-y-5 w-[20%]'>
+                                        {
+                                            overviewData?.totalCountry?.lastWeek.map(range => (
+                                                <div key={range._id} className='p-2'>
+                                                    <div className='flex items-center'>
+                                                        {/* <img className='w-10' src={bd} alt="" /> */}
+                                                        <h1>{range._id}</h1>
+                                                    </div>
+                                                    <div className='flex items-center gap-1'>
+                                                        <input value={'90'} type="range" />
+                                                        <span>{range.totalCustomers}%</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className='my-10'>
+                            <div className='my-10 flex justify-between space-x-5'>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Revennue</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastMonth}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaUsers className='text-2xl text-[#fca3a7] p-1' />
+
+                                        </span>
+                                        <p className='text-[17px]'>Total Customar</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastMonth}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Transaction</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastMonth}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Product</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastMonth}</h1>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-5 w-full'>
+                                <div className='w-[50%] border bg-white p-3'>
+                                    <RechartDashboard weekData={weekData}></RechartDashboard>
+                                </div>
+                                <div className='flex border w-[50%]'>
+                                    <div className='w-[65%] bg-white p-1'>
+                                        <GeoMonthChart chartMonthData={chartMonthData} ></GeoMonthChart>
+                                    </div>
+                                    <div className='space-y-5 w-[20%]'>
+                                        {
+                                            overviewData?.totalCountry?.lastMonth.map(range => (
+                                                <div key={range._id} className='p-2'>
+                                                    <div className='flex items-center'>
+                                                        {/* <img className='w-10' src={bd} alt="" /> */}
+                                                        <h1>{range._id}</h1>
+                                                    </div>
+                                                    <div className='flex items-center gap-1'>
+                                                        <input value={'90'} type="range" />
+                                                        <span>{range.totalCustomers}%</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className='my-10'>
+                            <div className='my-10 flex justify-between space-x-5'>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Revennue</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastYear}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaUsers className='text-2xl text-[#fca3a7] p-1' />
+
+                                        </span>
+                                        <p className='text-[17px]'>Total Customar</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastYear}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Transaction</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastYear}</h1>
+                                </div>
+                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='border rounded-full border-[#fca3a7]'>
+                                            <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
+                                        </span>
+                                        <p className='text-[17px]'>Total Product</p>
+                                    </div>
+                                    <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastYear}</h1>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-5 w-full'>
+                                <div className='w-[50%] border bg-white p-3'>
+                                    <RechartDashboard weekData={weekData}></RechartDashboard>
+                                </div>
+                                <div className='flex border w-[50%]'>
+                                    <div className='w-[65%] bg-white p-1'>
+                                        <GeoYearChart chartYearData={chartYearData}></GeoYearChart>
+                                    </div>
+                                    <div className='space-y-5 w-[20%]'>
+                                        {
+                                            overviewData?.totalCountry?.lastYear.map(range => (
+                                                <div key={range._id} className='p-2'>
+                                                    <div className='flex items-center'>
+                                                        {/* <img className='w-10' src={bd} alt="" /> */}
+                                                        <h1>{range._id}</h1>
+                                                    </div>
+                                                    <div className='flex items-center gap-1'>
+                                                        <input value={'90'} type="range" />
+                                                        <span>{range.totalCustomers}%</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </TabPanel>
                 </Tabs>
             </div>

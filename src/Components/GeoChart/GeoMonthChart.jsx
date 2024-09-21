@@ -1,15 +1,6 @@
 import { Chart } from "react-google-charts";
 
-
-export const data = [
-    ["Country", "Popularity"],
-    ["india", 500],
-    ["Canada", 500],
-    ["bangladesh", 500],
-
-];
-
-const GeoChart = ({ chartData }) => {
+const GeoMonthChart = ({ chartMonthData }) => {
     return (
         <div className="className='w-full h-80'">
             <Chart
@@ -29,10 +20,10 @@ const GeoChart = ({ chartData }) => {
                 width="100%"
                 // height="400px"
                 className="h-[336px]"
-                data={chartData}
+                data={chartMonthData}
             />
         </div>
     );
 };
 
-export default GeoChart;
+export default GeoMonthChart;

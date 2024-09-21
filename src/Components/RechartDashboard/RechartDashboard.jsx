@@ -4,9 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const data = [
     {
         name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
+        // uv: 4000,
+        pv: 500,
+        amt: 5,
     },
     {
         name: 'Page B',
@@ -46,14 +46,14 @@ const data = [
     },
 ];
 
-const RechartDashboard = () => {
+const RechartDashboard = ({weekData}) => {
     return (
         <div className='w-full h-80'>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     width={500}
                     height={300}
-                    data={data}
+                    data={weekData}
                     margin={{
                         top: 5,
                         right: 30,
@@ -67,7 +67,7 @@ const RechartDashboard = () => {
                     <Tooltip />
                     <Legend />
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Bar dataKey="pv" fill="#8884d8" background={{ fill: '#eee' }} />
+                    <Bar dataKey="pv" fill="#00bba6" background={{ fill: '#eee' }} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
