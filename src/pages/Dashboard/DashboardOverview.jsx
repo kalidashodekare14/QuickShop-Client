@@ -16,6 +16,7 @@ import GeoMonthChart from '../../Components/GeoChart/GeoMonthChart';
 import GeoYearChart from '../../Components/GeoChart/GeoYearChart';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import { FaUserCircle } from 'react-icons/fa';
 
 
 const DashboardOverview = () => {
@@ -113,11 +114,29 @@ const DashboardOverview = () => {
                             <span className="indicator-item badge bg-[#de192e] text-white">99+</span>
                             <div className='relative'>
                                 <IoNotificationsCircleSharp onClick={handleOpenNotification} className='text-4xl' />
-                                <div className={`${isOpenNoti ? 'visible' : 'hidden'} rounded-xl absolute right-0 w-60 h-60 border bg-white`}>
-                                    <ul className='space-y-5'>
+                                <div className={`${isOpenNoti ? 'visible' : 'hidden'} rounded-xl absolute right-0 w-96 h-80 border bg-white`}>
+                                    <ul className='space-y-5 p-2 overflow-y-auto scroll-smooth h-full'>
                                         {
                                             notifications.map((notification, index) => (
-                                                <li key={index}>{notification.message}, {notification.user.email}</li>
+                                                <li className='border-b p-1 space-x-1' key={index}>
+                                                    <div className='flex space-x-3 items-center'>
+                                                        <div className="dropdown dropdown-end">
+                                                            <div className="btn btn-ghost btn-circle avatar">
+                                                                <div className="w-10 rounded-full">
+                                                                    <img
+                                                                        alt="Tailwind CSS Navbar component"
+                                                                        src={notification?.image ? notification?.image : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div className='flex flex-col'>
+                                                            <h1 className='text-[#3a4966]'><span className='font-medium'>{notification?.name}</span> {notification.message}</h1>
+                                                            <span className='font-bold'>{notification.user.email}</span>
+                                                            <span className='font-semibold'>{notification.transaction_id}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                             ))
                                         }
                                     </ul>
