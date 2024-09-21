@@ -14,11 +14,53 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import GeoWeekChart from '../../Components/GeoChart/GeoWeekChart';
 import GeoMonthChart from '../../Components/GeoChart/GeoMonthChart';
 import GeoYearChart from '../../Components/GeoChart/GeoYearChart';
+import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
+
 
 const DashboardOverview = () => {
 
 
     const axiosSecure = useAxiosSecure()
+    const [notifications, setNotifications] = useState([])
+    const [isOpenNoti, setIsOpenNoti] = useState(false)
+
+
+    const handleOpenNotification = () => {
+        setIsOpenNoti(!isOpenNoti)
+    }
+
+    console.log(notifications)
+
+    useEffect(() => {
+
+
+        axiosSecure.get('notification')
+            // .then(res => res.json())
+            .then(res => {
+                console.log(res.data)
+                setNotifications(res.data)
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+
+        const socket = io('http://localhost:8000')
+
+        socket.on('newUser', (notification) => {
+            setNotifications(prev => [notification, ...prev])
+        })
+
+        // socket.on('newOrder', (data) => {
+        //     setNotifications(prev => [...prev, data.message])
+        // })
+
+        return () => {
+            socket.disconnect()
+        }
+
+    }, [])
+
 
     const { data: overviewData = {}, isLoading: userLoading, refetch } = useQuery({
         queryKey: ["overviewData"],
@@ -69,7 +111,25 @@ const DashboardOverview = () => {
                         <input className='input input-bordered rounded-none' type="text" />
                         <div className="indicator">
                             <span className="indicator-item badge bg-[#de192e] text-white">99+</span>
-                            <IoNotificationsCircleSharp className='text-4xl' />
+                            <div className='relative'>
+                                <IoNotificationsCircleSharp onClick={handleOpenNotification} className='text-4xl' />
+                                <div className={`${isOpenNoti ? 'visible' : 'hidden'} rounded-xl absolute right-0 w-60 h-60 border bg-white`}>
+                                    <ul className='space-y-5'>
+                                        {
+                                            notifications.map((notification, index) => (
+                                                <li key={index}>{notification.message}, {notification.user.email}</li>
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+                            {/* =========================== */}
+
+
+
                         </div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -146,10 +206,18 @@ const DashboardOverview = () => {
                             </div>
                             <div className='flex items-center gap-5 w-full'>
                                 <div className='w-[50%] border bg-white p-3'>
+                                    <div className='p-5'>
+                                        <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
+                                        <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
+                                    </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
+                                        <div className='p-5'>
+                                            <h1 className='text-xl font-bold'>Customar Groth</h1>
+                                            <p className='text-[#7c7c7c]'>of the work based on country</p>
+                                        </div>
                                         <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
@@ -215,10 +283,18 @@ const DashboardOverview = () => {
                             </div>
                             <div className='flex items-center gap-5 w-full'>
                                 <div className='w-[50%] border bg-white p-3'>
+                                    <div className='p-5'>
+                                        <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
+                                        <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
+                                    </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
+                                        <div className='p-5'>
+                                            <h1 className='text-xl font-bold'>Customar Groth</h1>
+                                            <p className='text-[#7c7c7c]'>of the work based on country</p>
+                                        </div>
                                         <GeoWeekChart chartWeekData={chartWeekData}></GeoWeekChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
@@ -284,10 +360,18 @@ const DashboardOverview = () => {
                             </div>
                             <div className='flex items-center gap-5 w-full'>
                                 <div className='w-[50%] border bg-white p-3'>
+                                    <div className='p-5'>
+                                        <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
+                                        <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
+                                    </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
+                                        <div className='p-5'>
+                                            <h1 className='text-xl font-bold'>Customar Groth</h1>
+                                            <p className='text-[#7c7c7c]'>of the work based on country</p>
+                                        </div>
                                         <GeoMonthChart chartMonthData={chartMonthData} ></GeoMonthChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
@@ -353,10 +437,18 @@ const DashboardOverview = () => {
                             </div>
                             <div className='flex items-center gap-5 w-full'>
                                 <div className='w-[50%] border bg-white p-3'>
+                                    <div className='p-5'>
+                                        <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
+                                        <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
+                                    </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
                                 <div className='flex border w-[50%]'>
                                     <div className='w-[65%] bg-white p-1'>
+                                        <div className='p-5'>
+                                            <h1 className='text-xl font-bold'>Customar Groth</h1>
+                                            <p className='text-[#7c7c7c]'>of the work based on country</p>
+                                        </div>
                                         <GeoYearChart chartYearData={chartYearData}></GeoYearChart>
                                     </div>
                                     <div className='space-y-5 w-[20%]'>
