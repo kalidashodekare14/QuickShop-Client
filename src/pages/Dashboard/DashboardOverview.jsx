@@ -25,17 +25,24 @@ const DashboardOverview = () => {
     const axiosSecure = useAxiosSecure()
     const [notifications, setNotifications] = useState([])
     const [isOpenNoti, setIsOpenNoti] = useState(false)
-
+    // const [unReadNotificaton, setUnReadNotification] = useState(0)
 
     const handleOpenNotification = () => {
         setIsOpenNoti(!isOpenNoti)
+
+        axiosSecure.patch('/notification-unread-update')
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    notificationRefetch()
+                }
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+
     }
 
-    console.log(notifications)
-
     useEffect(() => {
-
-
         axiosSecure.get('notification')
             // .then(res => res.json())
             .then(res => {
@@ -62,6 +69,14 @@ const DashboardOverview = () => {
 
     }, [])
 
+    const { data: unReadNotifications = 0, isLoading, refetch: notificationRefetch } = useQuery({
+        queryKey: ["unReadNotifications"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/notification/unread`);
+            return res.data;
+        },
+    });
+
 
     const { data: overviewData = {}, isLoading: userLoading, refetch } = useQuery({
         queryKey: ["overviewData"],
@@ -71,8 +86,6 @@ const DashboardOverview = () => {
         },
     });
 
-
-    console.log(overviewData)
     // country customar
     const country24HourseData = overviewData?.totalCountry?.last24Hours.map(country => [country._id, country.totalCustomers]) || []
     const chart24HourseData = [["Country", "Popularity"], ...country24HourseData]
@@ -111,7 +124,7 @@ const DashboardOverview = () => {
                     <div className='flex justify-center items-center gap-5'>
                         <input className='input input-bordered rounded-none' type="text" />
                         <div className="indicator">
-                            <span className="indicator-item badge bg-[#de192e] text-white">99+</span>
+                            <span className="indicator-item badge bg-[#de192e] text-white">{unReadNotifications?.totalUnreadNotificaton}+</span>
                             <div className='relative'>
                                 <IoNotificationsCircleSharp onClick={handleOpenNotification} className='text-4xl' />
                                 <div className={`${isOpenNoti ? 'visible' : 'hidden'} rounded-xl absolute right-0 w-96 h-80 border bg-white`}>
