@@ -1,84 +1,20 @@
-import { FaCheckDouble, FaFonticonsFi, FaUsers } from 'react-icons/fa6';
-import { IoNotificationsCircleSharp } from 'react-icons/io5';
+import { FaCheckDouble, FaUsers } from 'react-icons/fa6';;
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { TbMoneybag } from "react-icons/tb";
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import RechartDashboard from '../../Components/RechartDashboard/RechartDashboard';
 import GeoChart from '../../Components/GeoChart/Geo24HorseChart';
-import bd from '../../assets/bangladesh.png'
-import ind from '../../assets/india.png'
-import ca from '../../assets/canada.png'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import GeoWeekChart from '../../Components/GeoChart/GeoWeekChart';
 import GeoMonthChart from '../../Components/GeoChart/GeoMonthChart';
 import GeoYearChart from '../../Components/GeoChart/GeoYearChart';
-import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
-import { FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import useUserProfile from '../../hooks/useUserProfile';
-
 
 const DashboardOverview = () => {
 
 
     const axiosSecure = useAxiosSecure()
-    const [notifications, setNotifications] = useState([])
-    const [isOpenNoti, setIsOpenNoti] = useState(false)
-    const [userData] = useUserProfile()
-
-    const handleOpenNotification = () => {
-        setIsOpenNoti(!isOpenNoti)
-
-        axiosSecure.patch('/notification-unread-update')
-            .then(res => {
-                if (res.data.modifiedCount > 0) {
-                    notificationRefetch()
-                }
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
-
-    }
-
-    useEffect(() => {
-        axiosSecure.get('/notification')
-            // .then(res => res.json())
-            .then(res => {
-                console.log(res.data)
-                setNotifications(res.data)
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
-
-        const socket = io('http://localhost:8000')
-
-        socket.on('newUser', (notification) => {
-            setNotifications(prev => [notification, ...prev])
-        })
-
-        // socket.on('newOrder', (data) => {
-        //     setNotifications(prev => [...prev, data.message])
-        // })
-
-        return () => {
-            socket.disconnect()
-        }
-
-    }, [])
-
-    const { data: unReadNotifications = 0, isLoading, refetch: notificationRefetch } = useQuery({
-        queryKey: ["unReadNotifications"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/notification/unread`);
-            return res.data;
-        },
-    });
-
 
     const { data: overviewData = {}, isLoading: userLoading, refetch } = useQuery({
         queryKey: ["overviewData"],
@@ -121,7 +57,7 @@ const DashboardOverview = () => {
     return (
         <div className=''>
             <div className='border-b mb-5'>
-                <div className='flex justify-between items-center my-5 px-10'>
+                {/* <div className='flex flex-col justify-between items-center my-5 px-10'>
                     <h1 className='text-2xl'>Dashboard</h1>
                     <div className='flex  justify-center items-center gap-5'>
                         <input className='input input-bordered rounded-none' type="text" />
@@ -157,13 +93,6 @@ const DashboardOverview = () => {
                                     </ul>
                                 </div>
                             </div>
-
-
-
-                            {/* =========================== */}
-
-
-
                         </div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -187,9 +116,9 @@ const DashboardOverview = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <div className='mx-10'>
+            <div className='lg:mx-10'>
                 <Tabs>
                     <TabList className="border-none">
                         <Tab>Last 24 hour</Tab>
@@ -199,8 +128,8 @@ const DashboardOverview = () => {
                     </TabList>
                     <TabPanel>
                         <div className='my-10'>
-                            <div className='my-10 flex justify-between space-x-5'>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                            <div className='my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between lg:space-x-5 gap-5'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
@@ -209,7 +138,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.last24Hours}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaUsers className='text-2xl text-[#fca3a7] p-1' />
@@ -219,7 +148,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.last24Hours}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
@@ -228,7 +157,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.last24Hours}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
@@ -238,23 +167,23 @@ const DashboardOverview = () => {
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.last24Hours}</h1>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-5 w-full'>
-                                <div className='w-[50%] border bg-white p-3'>
+                            <div className='flex flex-col lg:flex-row items-center gap-5 w-full'>
+                                <div className='lg:w-[50%] border bg-white p-3'>
                                     <div className='p-5'>
                                         <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
                                         <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
                                     </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
-                                <div className='flex border w-[50%]'>
-                                    <div className='w-[65%] bg-white p-1'>
+                                <div className='flex flex-col lg:flex-row border lg:w-[50%]'>
+                                    <div className='lg:w-[65%] bg-white p-1'>
                                         <div className='p-5'>
                                             <h1 className='text-xl font-bold'>Customar Groth</h1>
                                             <p className='text-[#7c7c7c]'>of the work based on country</p>
                                         </div>
                                         <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
-                                    <div className='space-y-5 w-[20%]'>
+                                    <div className='space-y-5 lg:w-[20%]'>
                                         {
                                             overviewData?.totalCountry?.last24Hours.map(range => (
                                                 <div key={range._id} className='p-2'>
@@ -276,8 +205,8 @@ const DashboardOverview = () => {
                     </TabPanel>
                     <TabPanel>
                         <div className='my-10'>
-                            <div className='my-10 flex justify-between space-x-5'>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                            <div className='my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between lg:space-x-5 gap-5'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
@@ -286,7 +215,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastWeek}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaUsers className='text-2xl text-[#fca3a7] p-1' />
@@ -296,7 +225,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastWeek}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
@@ -305,7 +234,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastWeek}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
@@ -315,23 +244,23 @@ const DashboardOverview = () => {
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastWeek}</h1>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-5 w-full'>
-                                <div className='w-[50%] border bg-white p-3'>
+                            <div className='flex flex-col lg:flex-row items-center gap-5 w-full'>
+                                <div className='lg:w-[50%] border bg-white p-3'>
                                     <div className='p-5'>
                                         <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
                                         <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
                                     </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
-                                <div className='flex border w-[50%]'>
-                                    <div className='w-[65%] bg-white p-1'>
+                                <div className='flex flex-col lg:flex-row border lg:w-[50%]'>
+                                    <div className='lg:w-[65%] bg-white p-1'>
                                         <div className='p-5'>
                                             <h1 className='text-xl font-bold'>Customar Groth</h1>
                                             <p className='text-[#7c7c7c]'>of the work based on country</p>
                                         </div>
-                                        <GeoWeekChart chartWeekData={chartWeekData}></GeoWeekChart>
+                                        <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
-                                    <div className='space-y-5 w-[20%]'>
+                                    <div className='space-y-5 lg:w-[20%]'>
                                         {
                                             overviewData?.totalCountry?.lastWeek.map(range => (
                                                 <div key={range._id} className='p-2'>
@@ -353,8 +282,8 @@ const DashboardOverview = () => {
                     </TabPanel>
                     <TabPanel>
                         <div className='my-10'>
-                            <div className='my-10 flex justify-between space-x-5'>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                            <div className='my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between lg:space-x-5 gap-5'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
@@ -363,7 +292,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastMonth}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaUsers className='text-2xl text-[#fca3a7] p-1' />
@@ -373,7 +302,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastMonth}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
@@ -382,7 +311,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastMonth}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
@@ -392,23 +321,23 @@ const DashboardOverview = () => {
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastMonth}</h1>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-5 w-full'>
-                                <div className='w-[50%] border bg-white p-3'>
+                            <div className='flex flex-col lg:flex-row items-center gap-5 w-full'>
+                                <div className='lg:w-[50%] border bg-white p-3'>
                                     <div className='p-5'>
                                         <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
                                         <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
                                     </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
-                                <div className='flex border w-[50%]'>
-                                    <div className='w-[65%] bg-white p-1'>
+                                <div className='flex flex-col lg:flex-row border lg:w-[50%]'>
+                                    <div className='lg:w-[65%] bg-white p-1'>
                                         <div className='p-5'>
                                             <h1 className='text-xl font-bold'>Customar Groth</h1>
                                             <p className='text-[#7c7c7c]'>of the work based on country</p>
                                         </div>
-                                        <GeoMonthChart chartMonthData={chartMonthData} ></GeoMonthChart>
+                                        <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
-                                    <div className='space-y-5 w-[20%]'>
+                                    <div className='space-y-5 lg:w-[20%]'>
                                         {
                                             overviewData?.totalCountry?.lastMonth.map(range => (
                                                 <div key={range._id} className='p-2'>
@@ -430,8 +359,8 @@ const DashboardOverview = () => {
                     </TabPanel>
                     <TabPanel>
                         <div className='my-10'>
-                            <div className='my-10 flex justify-between space-x-5'>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                            <div className='my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between lg:space-x-5 gap-5'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <TbMoneybag className='text-2xl text-[#fca3a7] p-1' />
@@ -440,7 +369,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>${overviewData?.totalRevenue?.lastYear}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaUsers className='text-2xl text-[#fca3a7] p-1' />
@@ -450,7 +379,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalCustomers?.lastYear}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <FaCheckDouble className='text-2xl text-[#fca3a7] p-1' />
@@ -459,7 +388,7 @@ const DashboardOverview = () => {
                                     </div>
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalTransactions?.lastYear}</h1>
                                 </div>
-                                <div className='bg-white w-52 p-5 space-y-2 border rounded-2xl'>
+                                <div className='bg-white lg:w-52 p-5 space-y-2 border rounded-2xl'>
                                     <div className='flex items-center gap-2'>
                                         <span className='border rounded-full border-[#fca3a7]'>
                                             <MdProductionQuantityLimits className='text-2xl text-[#fca3a7] p-1' />
@@ -469,23 +398,23 @@ const DashboardOverview = () => {
                                     <h1 className='text-3xl font-bold'>{overviewData?.totalProducts?.lastYear}</h1>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-5 w-full'>
-                                <div className='w-[50%] border bg-white p-3'>
+                            <div className='flex flex-col lg:flex-row items-center gap-5 w-full'>
+                                <div className='lg:w-[50%] border bg-white p-3'>
                                     <div className='p-5'>
                                         <h1 className='text-xl font-bold'>Revenue Growth <span className='text-[13px] font-normal'>(USD)</span></h1>
                                         <p className='text-[#7c7c7c]'>of the week on website and compared with e-comarce</p>
                                     </div>
                                     <RechartDashboard weekData={weekData}></RechartDashboard>
                                 </div>
-                                <div className='flex border w-[50%]'>
-                                    <div className='w-[65%] bg-white p-1'>
+                                <div className='flex flex-col lg:flex-row border lg:w-[50%]'>
+                                    <div className='lg:w-[65%] bg-white p-1'>
                                         <div className='p-5'>
                                             <h1 className='text-xl font-bold'>Customar Groth</h1>
                                             <p className='text-[#7c7c7c]'>of the work based on country</p>
                                         </div>
-                                        <GeoYearChart chartYearData={chartYearData}></GeoYearChart>
+                                        <GeoChart chart24HourseData={chart24HourseData}></GeoChart>
                                     </div>
-                                    <div className='space-y-5 w-[20%]'>
+                                    <div className='space-y-5 lg:w-[20%]'>
                                         {
                                             overviewData?.totalCountry?.lastYear.map(range => (
                                                 <div key={range._id} className='p-2'>
