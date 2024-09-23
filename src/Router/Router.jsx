@@ -23,6 +23,7 @@ import OrderItems from "../pages/Dashboard/OrderItems";
 import PaymentProtectedRoute from "../Routes/PaymentProtectedRoute/PaymentProtectedRoute";
 import UserOrderHistory from "../Components/UserOrderHistory/UserOrderHistory";
 import DashboardOverview from "../pages/Dashboard/DashboardOverview";
+import AdminProfile from "../pages/Dashboard/AdminProfile";
 
 
 const router = createBrowserRouter([
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
         path: '/dashboard/order-items/:id',
         element: <OrderItems></OrderItems>,
         loader: ({ params }) => fetch(`http://localhost:8000/order-items/${params.id}`)
+      },
+      {
+        path: '/dashboard/admin-profile',
+        element: <AdminProfile></AdminProfile>
       }
     ],
   },

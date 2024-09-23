@@ -17,6 +17,8 @@ import GeoYearChart from '../../Components/GeoChart/GeoYearChart';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { FaUserCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import useUserProfile from '../../hooks/useUserProfile';
 
 
 const DashboardOverview = () => {
@@ -25,7 +27,7 @@ const DashboardOverview = () => {
     const axiosSecure = useAxiosSecure()
     const [notifications, setNotifications] = useState([])
     const [isOpenNoti, setIsOpenNoti] = useState(false)
-    // const [unReadNotificaton, setUnReadNotification] = useState(0)
+    const [userData] = useUserProfile()
 
     const handleOpenNotification = () => {
         setIsOpenNoti(!isOpenNoti)
@@ -43,7 +45,7 @@ const DashboardOverview = () => {
     }
 
     useEffect(() => {
-        axiosSecure.get('notification')
+        axiosSecure.get('/notification')
             // .then(res => res.json())
             .then(res => {
                 console.log(res.data)
@@ -121,7 +123,7 @@ const DashboardOverview = () => {
             <div className='border-b mb-5'>
                 <div className='flex justify-between items-center my-5 px-10'>
                     <h1 className='text-2xl'>Dashboard</h1>
-                    <div className='flex justify-center items-center gap-5'>
+                    <div className='flex  justify-center items-center gap-5'>
                         <input className='input input-bordered rounded-none' type="text" />
                         <div className="indicator">
                             <span className="indicator-item badge bg-[#de192e] text-white">{unReadNotifications?.totalUnreadNotificaton}+</span>
@@ -168,17 +170,17 @@ const DashboardOverview = () => {
                                 <div className="w-10 rounded-full">
                                     <img
                                         alt="Tailwind CSS Navbar component"
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                        src={userData.image} />
                                 </div>
                             </div>
                             <ul
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                                 <li>
-                                    <span className="justify-between">
+                                    <Link to={'/dashboard/admin-profile'} className="justify-between">
                                         Profile
                                         <span className="badge">New</span>
-                                    </span>
+                                    </Link>
                                 </li>
                                 <li><span>Settings</span></li>
                                 <li><span>Logout</span></li>
