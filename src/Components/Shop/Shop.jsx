@@ -103,7 +103,7 @@ const Shop = () => {
   ) : (
     <div className="flex bg-[#f2f4f8] pt-10 relative">
       <div
-        className={`lg:ms-5 fixed z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${isOpen
+        className={`lg:ms-5 fixed  z-10 left-0 lg:translate-y-0 md:translate-y-0 translate-y-16 transform ${isOpen
           ? "translate-x-2 translate-y-16 p-3 border "
           : "-translate-x-full"
           } transition-transform duration-300 ease-in-out  md:translate-x-0 bg-[#f2f4f8] w-72 min-h-screen space-y-2`}
