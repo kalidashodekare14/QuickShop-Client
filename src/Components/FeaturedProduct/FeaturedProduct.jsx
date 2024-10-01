@@ -28,7 +28,7 @@ const FeaturedProduct = () => {
         {/* Card1 */}
         {
           featuredProduct.map(product => (
-            <div key={product._id} className="relative border flex flex-col justify-center items-center me-2">
+            <div key={product._id} className="card relative border flex flex-col justify-center items-center me-2">
               <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
                 <h1 className="text-white">25 % OFF</h1>
               </div>
@@ -37,7 +37,10 @@ const FeaturedProduct = () => {
               </div>
               <div className="text-center text-2xl">
                 <h1 className='text-[20px]'>{product.name.slice(0, 39)}</h1>
-                <p>$150</p>
+                <div className="flex justify-center items-center gap-5 text-xl mt-3 text-[#6b6868]">
+                  <p>${product.price}</p>
+                  <p>{product.percentOff}</p>
+                </div>
               </div>
               <div className="flex items-center gap-3 mt-5 mb-5">
                 <button className="btn bg-[#00bba6] text-white rounded-md">Buy Now</button>

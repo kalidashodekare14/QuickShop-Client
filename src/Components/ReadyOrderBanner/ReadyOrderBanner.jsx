@@ -42,7 +42,7 @@ const ReadyOrderBanner = () => {
   return (
     <div>
       <div>
-        <h1 className="text-center text-3xl lg:my-20 my-10">
+        <h1 className="text-center text-3xl lg:my-20 my-10 font-motserrat font-[700]">
           Ready for Order 🔥
         </h1>
       </div>
@@ -58,14 +58,15 @@ const ReadyOrderBanner = () => {
             className="relative border flex flex-col justify-center items-center me-2"
           >
             <div className="absolute top-0 right-0 p-2 bg-[#00bba6]">
-              <h1 className="text-white">25 % OFF</h1>
+              <h1 className="text-white font-motserrat text-sm">25 % OFF</h1>
             </div>
             <div className="w-full">
               <img className="w-full h-[30vh]" src={product.image} alt="" />
             </div>
             <div className="text-center text-2xl">
-              <h1 className="text-[20px]">{product.name.slice(0, 39)}</h1>
+              <h1 className="text-[16px] font-openSans ">{product.name.slice(0, 39)}</h1>
               <p>$150</p>
+              
             </div>
             <div className="flex items-center gap-3 mt-5 mb-5">
               <button className="btn bg-[#00bba6] text-white rounded-md">
