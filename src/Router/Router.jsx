@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         path: "/details/:id",
         element: <Details></Details>,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/details/${params.id}`),
+          fetch(`https://quickshop-server.onrender.com/details/${params.id}`),
       },
       {
         path: "/cart-checkout",
@@ -112,7 +112,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/updateProduct/:id",
         element: <AdminRoute><UpdateProduct></UpdateProduct></AdminRoute>,
-        loader: ({ params }) => fetch(`http://localhost:8000/details/${params.id}`)
+        loader: ({ params }) => fetch(`https://quickshop-server.onrender.com/details/${params.id}`)
       },
       {
         path: '/dashboard/order-history',
@@ -121,7 +121,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/order-items/:id',
         element: <OrderItems></OrderItems>,
-        loader: ({ params }) => fetch(`http://localhost:8000/order-items/${params.id}`)
+        loader: ({ params }) => fetch(`https://quickshop-server.onrender.com/order-items/${params.id}`)
       },
       {
         path: '/dashboard/admin-profile',

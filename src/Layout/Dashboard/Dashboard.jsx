@@ -54,7 +54,7 @@ const Dashboard = () => {
         console.log(error.message)
       })
 
-    const socket = io('http://localhost:8000')
+    const socket = io('https://quickshop-server.onrender.com')
 
     socket.on('newUser', (notification) => {
       setNotifications(prev => [notification, ...prev])
